@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>设置_盘丝读</title>
+    <% include("/share/include.html"){} %>
+    <script>
+        function setVue( ){
+
+            var cl = document.getElementById('skinBg');
+            var index = cl.selectedIndex;
+            var clValue = cl.options[index].value;
+
+            var sp = document.getElementById('line');
+            var spindex = sp.selectedIndex;
+            var spValue=sp.options[spindex].value;
+
+            var fn = document.getElementById('size');
+            var fnIdnex = fn.selectedIndex;
+            var fnValue = fn.options[fnIdnex].value;
+
+            var url="${url}"+"&fontSize="+fnValue+"&spacing="+spValue+"&style="+clValue;
+            window.location.href=url
+        }
+    </script>
+</head>
+<body class="body-bg">
+<div class="content">
+    <header class="head">
+        <a class="leftbtn" id="headBtn" href="javascript:history.go(-1)"></a>
+        <label>设置</label>
+    </header>
+    <!-- begin 中间内容部分-->
+    <div class="set-box" id="setData">
+        <section class="list-item">
+            <label>阅读模式</label>
+            <div class="sleBG">
+                <div class="sleHid">
+                    <select name="skinBg_name" id="skinBg">
+                        #if(isLight == 1)
+                        <option value="read-box" ${color=="read-box"?'selected="selected"':''}>默认</option>
+                        <option value="night—box" selected="selected" }>夜间</option>
+                        #else
+                        <option value="read-box" selected="selected" }>默认</option>
+                        <option value="night—box" ${color=="night—box"?'selected="selected"':''}>夜间</option>
+                        #end
+                        <option value="read-pink-box" ${color=="read-pink-box"?'selected="selected"':''}>粉色</option>
+                        <option value="read-green-box" ${color=="read-green-box"?'selected="selected"':''}>绿色</option>
+                        <option value="read-yellow-box" ${color=="read-yellow-box"?'selected="selected"':''}>黄色</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="list-item">
+            <label>行间距</label>
+            <div class="sleBG">
+                <div class="sleHid">
+                    <select name="type_line" id="line">
+                        <option value="150" ${spacing=="150"?'selected="selected"':''} >小</option>
+                        #if(spacing=="")
+                        <option value="180" selected="selected">中</option>
+                        #else
+                        <option value="180" ${spacing=="180"?'selected="selected"':''}>中</option>
+                        #end
+                        <option value="210" ${spacing=="210"?'selected="selected"':''}>大</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="list-item">
+            <label>字号</label>
+            <div class="sleBG">
+                <div class="sleHid">
+                    <select name="type_size" id="size">
+                        <option value=".8em" ${font==".8em"?'selected="selected"':''}>28号字体</option>
+                        <% if(font=="") { %>
+                        <option value="1em" selected="selected"  >32号字体</option>
+                        <% } else { %>
+                        <option value="1em" #if(font =="1em") selected="selected" #end >32号字体</option>
+                        <% } %>
+                        <option value="1.2em" #if(font =="1.2em") selected="selected" #end >36号字体</option>
+                        <option value="1.4em" #if(font =="1.4em") selected="selected" #end  >40号字体</option>
+                        <option value="1.5em" #if(font =="1.5em") selected="selected" #end >44号字体</option>
+                        <option value="1.6em" #if(font =="1.6em") selected="selected" #end >48号字体</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+        <section class="list-item">
+            <a href="#" onclick="setVue()">
+                <div class="btn-submit">保 存</div>
+            </a>
+        </section>
+        <div class="content">
+            <footer class="set-footer">
+                <p>&nbsp;<br/>&nbsp;</p>
+            </footer>
+        </div>
+
+    </div>
+
+    <!-- end 中间内容部分-->
+
+</div>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

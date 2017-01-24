@@ -1,0 +1,7 @@
+##双广告
+#define(ComponentBaseVo comp)
+<div class="banner-multi clear padding_left_right">
+    #for(DataBaseVo data:comp.list)
+    <a href="${data.url}"><img data-src="${data.logo}"/></a>
+    #end
+</div>

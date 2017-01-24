@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #define(User user)
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION)
+    )
+    <title>账户记录</title>
+    #include("../tools/meta.html")
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+    <script>
+        var $_list = {
+            menu:["chargeList","consumeList"], // 导航菜单类别
+            chargeList : {
+                url : "${prefStr}/ft/user/rechListAjax.do?id=${uid}&p=",
+                canLoading: true,
+                isLoading: false,
+                page : 1,
+                emptyMsg : '您还没有充值记录'
+            },
+            consumeList : {
+                url: "${prefStr}/ft/user/payListAjax.do?id=${uid}&p=",
+                canLoading: true,
+                isLoading:false,
+                page: 1,
+                emptyMsg : '您还没有消费记录'
+            },
+            curList: {"name" : "${tabName}", index: parseInt("${tabIndex}") }
+        }
+    </script>
+    <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+</head>
+
+<body>
+    <div class="order recharge_list_detail">
+        <div class="recharge_nav">
+            <div class="recharge_nav_inner clear">
+                <a href="">充值记录</a>
+                <a href="">消费记录</a>
+            </div>
+        </div>
+        <div class="recharge_detail_data" id="bills_content"></div>
+    </div>
+</body>
+</html>

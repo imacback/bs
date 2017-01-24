@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="bookGeneralService" class="cn.aiyuedu.bs.service.BookGeneralService"/>
+    <bean id="categoryGeneralService" class="com.duoqu.rs.service.CategoryGeneralServiceTest" init-method="reload"/>
+    <bean id="chapterContentService" class="cn.aiyuedu.bs.service.ChapterContentService"/>
+    <bean id="chapterGeneralService" class="cn.aiyuedu.bs.service.ChapterGeneralService"/>
+    <bean id="commentGeneralService" class="cn.aiyuedu.bs.service.CommentGeneralService"/>
+    <bean id="containerGeneralService" class="cn.aiyuedu.bs.service.ContainerGeneralService"/>
+    <bean id="filterWordGeneralService" class="cn.aiyuedu.bs.service.FilterWordGeneralService" init-method="reload"/>
+    <bean id="providerGeneralService" class="cn.aiyuedu.bs.service.ProviderGeneralService" init-method="reload"/>
+    <bean id="rankingGeneralService" class="cn.aiyuedu.bs.service.RankingGeneralService" init-method="reload"/>
+    <bean id="tagGeneralService" class="cn.aiyuedu.bs.service.TagGeneralService" init-method="reload"/>
+    <bean id="userRecommendGeneralService" class="cn.aiyuedu.bs.service.UserRecommendGeneralService"/>
+    <bean id="userAttendService" class="cn.aiyuedu.bs.service.UserAttendService"/>
+    <bean id="userService" class="cn.aiyuedu.bs.service.UserGeneralService"/>
+
+</beans>

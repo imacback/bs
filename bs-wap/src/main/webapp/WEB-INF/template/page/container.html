@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include("/share/header.html"){} %>
+<head>
+    <title>${container.name}</title>
+    <% include("/share/meta.html"){} %>
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}css/reader.min.css${RES_VERSION}"/>
+    <script src="${RES_PATH}js/zepto.min.js"></script>
+    <script src="${RES_PATH}js/reader.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}js/index.min.js${RES_VERSION}"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/read.css" media="all">
+</head>
+<body>
+<% include("/include/nav.html"){} %>
+<div class="home">
+    <% for(component in container.components) { %>
+    <% var path = "/component/" + component.typeId + ".html"; %>
+    <% include(path, {component:component}){} %>
+	<% if (has(id) && id == 1&&component.typeId==1) { %>
+	<% include("/include/ad.html"){} %>
+	<% } %>
+    <% } %>
+</div>
+<% if (has(id) && id == 1) { %>
+<% include("/include/ad_bottom.html"){} %>
+<% include("/include/footer.html"){} %>
+<% } %>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

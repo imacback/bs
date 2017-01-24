@@ -1,0 +1,33 @@
+<% /* 书籍与频道（小图） */  %>
+<section>
+    <nav class="u-1 u-1-2 font_size_medium" style="border-bottom-color: rgba(${component.fontColor},0.3)">
+        <img src="${component.icon}" alt="" />
+        <span style="color:  rgba(${component.fontColor},1)">${component.name}</span>
+        <% if (has(component.url) && component.url != '') { %>
+        <a class="more" href="${comonent.url}">${component.entryName}
+            <img src="${RES_PATH}/images/icon-arrow.png" alt="" />
+        </a>
+        <% } %>
+    </nav>
+    <% if (component.books.~size > 0) { %>
+    <% var first = component.books[0]; %>
+    <div class="padding_not_top clear-padding sepcial-color">
+        <a href="/book/show.do?bid=${first.id}" class="u-3 clear">
+            <img data-src="${first.smallPic}" src="${DEFAULT_COVER}"/>
+            <aside>
+                <p>${first.name}</p>
+                <p class="font_size_small">${first.author} </p>
+                <p class="font_size_small">${first.shortMemo}</p>
+            </aside>
+        </a>
+    </div>
+    <article class="u-4">
+        <%
+        var size = component.books.~size;
+        for(var i=1;i<size;i++){
+        %>
+            <a href="/book/show.do?bid=${component.books[i].id}">${component.books[i].name}</a>
+        <% } %>
+    </article>
+    <% } %>
+</section>

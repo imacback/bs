@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.duoqu.rs.dao.repository.ChapterDao">
+
+    <insert id="insert" parameterType="chapter" useGeneratedKeys="true" keyProperty="id">
+        insert into t_chapter(
+                cp_chapter_id,
+                name,
+                volume,
+                book_id,
+                order_id,
+                is_fee,
+                price,
+                words,
+                filtered_words,
+                filter_words,
+                publish_date,
+                status,
+                create_date,
+                creator_id,
+                edit_date,
+                editor_id
+        ) values (
+                #{cpChapterId},
+                #{name},
+                #{volume},
+                #{bookId},
+                #{orderId},
+                #{isFee},
+                #{price},
+                #{words},
+                #{filteredWords},
+                #{filterWords},
+                #{publishDate},
+                #{status},
+                #{createDate},
+                #{creatorId},
+                #{editDate},
+                #{editorId}
+        )
+    </insert>
+
+    <select id="getMaxOrderId" parameterType="long" resultType="int">
+        <![CDATA[
+			select ifnull(max(order_id),0) from t_chapter where book_id=#{bookId}
+		]]>
+    </select>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_chapter
+        ]]>
+        <where>
+            <if test="bookId != null">
+                book_id = #{bookId}
+            </if>
+            <if test="cpChapterId != null">
+                and cp_chapter_id = #{cpChapterId}
+            </if>
+            <if test="name != null">
+                and name = #{name}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="get" parameterType="map" resultType="chapterDto">
+        <![CDATA[
+			select
+                    id,
+                    cp_chapter_id cpChapterId,
+                    name,
+                    volume,
+                    book_id bookId,
+                    order_id orderId,
+                    is_fee isFee,
+                    price,
+                    words,
+                    filtered_words filteredWords,
+                    filter_words filterWords,
+                    publish_date publishDate,
+                    status,
+                    create_date createDate,
+                    creator_id creatorId,
+                    edit_date editDate,
+                    editor_id editorId
+			from t_chapter
+        ]]>
+        <where>
+            <if test="bookId != null">
+                book_id = #{bookId}
+            </if>
+            <if test="cpChapterId != null">
+                and cp_chapter_id = #{cpChapterId}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="isMaxOrder != null">
+                and order_id = (select max(order_id) from t_chapter where book_id=#{bookId})
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="chapter">
+        update t_chapter
+        <set>
+
+            <if test="name != null">
+                name = #{name},
+            </if>
+
+            <if test="volume != null">
+                volume = #{volume},
+            </if>
+
+            <if test="bookId != null">
+                book_id = #{bookId},
+            </if>
+
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+
+            <if test="isFee != null">
+                is_fee = #{isFee},
+            </if>
+
+            <if test="price != null">
+                price = #{price},
+            </if>
+
+            <if test="words != null">
+                words = #{words},
+            </if>
+
+            <if test="filteredWords != null">
+                filtered_words = #{filteredWords},
+            </if>
+
+            <if test="filterWords != null">
+                filter_words = #{filterWords},
+            </if>
+
+            <if test="publishDate != null">
+                publish_date = #{publishDate},
+            </if>
+
+            <if test="status != null">
+                status = #{status},
+            </if>
+
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+
+            <if test="creatorId != null">
+                creator_id = #{creatorId},
+            </if>
+
+            <if test="editDate != null">
+                edit_date = #{editDate},
+            </if>
+
+            <if test="editorId != null">
+                editor_id = #{editorId}
+            </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_chapter
+        ]]>
+        <where>
+            <if test="bookId != null">
+                book_id = #{bookId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="chapter">
+        <![CDATA[
+    			select
+                         id,
+                         cp_chapter_id cpChapterId,
+                         name,
+                         volume,
+                         book_id bookId,
+                         order_id orderId,
+                         is_fee isFee,
+                         price,
+                         words,
+                         filtered_words filteredWords,
+                         filter_words filterWords,
+                         publish_date publishDate,
+                         status,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_chapter
+    		]]>
+        <where>
+            <if test="bookId != null">
+                book_id = #{bookId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+        </where>
+        <![CDATA[
+    			order by order_id asc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+
+    <select id="getChapterDtos" parameterType="map" resultType="chapterDto">
+        <![CDATA[
+    			select
+                         id,
+                         cp_chapter_id cpChapterId,
+                         name,
+                         volume,
+                         book_id bookId,
+                         order_id orderId,
+                         is_fee isFee,
+                         price,
+                         words,
+                         filtered_words filteredWords,
+                         filter_words filterWords,
+                         publish_date publishDate,
+                         status,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_chapter
+    		]]>
+        <where>
+            <if test="bookId != null">
+                book_id = #{bookId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+        </where>
+        <![CDATA[
+    			order by order_id asc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+                delete from t_chapter where id in
+            ]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateStatus" parameterType="map">
+        <![CDATA[
+                update t_chapter set status=#{status} where id in
+            ]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        #define(User user)
+        #set(
+            prefStr = pref(webroot(),SERVER_VERSION,'u',user.id)
+        )
+        <title>个人中心</title>
+        #include("../tools/meta.html")
+        <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+        <script type="text/javascript">
+            var $_list = {
+                url: "${prefStr}/ft/user/doAttend.do?id=${user.id}"
+            };
+        </script>
+        <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+        <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+    </head>
+    <body>
+        <div class="user-center">
+            <div class="user-info">
+                <div class="user-info-main">
+                    <a href="${prefStr}/ft/user/edit.do?id=${user.id}" class="avatar">
+                        #if(user.sex==1)
+                            <img src="${RES_PATH}/images/avatar_boy.png" alt="" />
+                        #elseif(user.sex==2)
+                            <img src="${RES_PATH}/images/avatar_girl.png" alt="" />
+                        #else
+                            <img src="${RES_PATH}/images/avatar_secret.png" alt="" />
+                        #end
+                    </a>
+                    <p class="user-name">${@StringUtils.hasText(user.nickName)?user.nickName:user.userName}</p>
+                    <p class="user-score"><span><em>${user.realBalance}</em>${PRODUCT_NAME}</span></p>
+                </div>
+                <div class="${isAttend?'sign-up hover':'sign-up'}" id="sign-up">
+                    <em></em><span>${isAttend?'已签到':'签到'}</span>
+                </div>
+            </div>
+            <div class="menu clear">
+                <a id="recharge" href="${prefStr}/ft/recharge/rechargeType.do?uid=${user.id}&platformId=${platformId}&version=${version}&ditchId=${ditchId}"><img src="${RES_PATH}/images/icon-book-list.png" alt="" />立即充值</a>
+                <a href="${prefStr}/ft/user/account.do?id=${user.id}" id="account"><img src="${RES_PATH}/images/icon-order.png" alt="" />我的账户</a>
+            </div>
+            <!--<div class="menu clear">-->
+                <!--<a href=""><img src="${RES_PATH}/images/icon-book-list.png" alt="" />我的书单</a>-->
+                <!--<a href=""><img src="${RES_PATH}/images/icon-order.png" alt="" />兑换专区</a>-->
+            <!--</div>-->
+
+            #if(len(rcmdList)>0)
+                <section class="u-8">
+                    <nav class="u-1 u-1-6 font_size_medium">
+                        <span>猜你喜欢</span>
+                    </nav>
+                    <div class="u-2-wrapper mt_8">
+                        <article class="u-2 clear">
+                            #for(BookVo bv:rcmdList)
+                            <article>
+                                <a  data-book-id="${bv.id}" href="${prefStr}/ft/book/detail.do?id=${bv.id}">
+                                    <img data-src="${bv.largePic}" src="${RES_PATH}/images/book_default.jpg"/>
+                                    <p>${bv.name}</p>
+                                </a>
+                            </article>
+                            #end
+                        </article>
+                    </div>
+                </section>
+            #end
+        </div>
+
+    </body>
+</html>

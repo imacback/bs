@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.AdminUserDao">
+
+    <insert id="insert" parameterType="adminUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_admin_user(
+        name,
+        password,
+        nickname,
+        role_id,
+        email,
+        is_use,
+        create_date,
+        creator_id,
+        edit_date,
+        editor_id
+        ) values (
+        #{name},
+        #{password},
+        #{nickname},
+        #{roleId},
+        #{email},
+        #{isUse},
+        #{createDate},
+        #{creatorId},
+        #{editDate},
+        #{editorId}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+			select count(*) from t_admin_user
+		]]>
+        <where>
+            <if test="name != null">
+                name=#{name}
+            </if>
+            <if test="email != null">
+                and email=#{email}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+	                and id != #{id}
+	            ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="get" parameterType="string" resultType="adminUser" >
+        <![CDATA[
+			select
+					id,
+					name,
+					password,
+					nickname,
+					role_id roleId,
+					email,
+					is_use isUse
+			from t_admin_user where id=#{id}
+		]]>
+    </select>
+
+    <update id="update" parameterType="adminUser">
+        update t_admin_user
+        <set>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="isUse != null">
+                is_use=#{isUse},
+            </if>
+            <if test="email != null">
+                email=#{email},
+            </if>
+            <if test="nickname != null">
+                nickname=#{nickname},
+            </if>
+            <if test="roleId != null">
+                role_id=#{roleId},
+            </if>
+            <if test="editorId != null">
+                editor_id=#{editorId},
+            </if>
+            <if test="editDate != null">
+                edit_date=#{editDate}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+			select count(*) from t_admin_user
+		]]>
+        <where>
+            <if test="isUse != null">
+                is_use=#{isUse}
+            </if>
+            <if test="roleId != null">
+                and role_id=#{roleId}
+            </if>
+            <if test="nickname != null">
+                and (nickname like concat('%',#{nickname},'%'))
+            </if>
+            <if test="email != null">
+                and (email like concat('%',#{email},'%'))
+            </if>
+            <if test="id != null">
+                <![CDATA[
+	                and id != #{id}
+	            ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="getAdminUserDtos" parameterType="map" resultType="adminUserDto" >
+        <![CDATA[
+			select
+					id,
+					name,
+					password,
+					nickname,
+					role_id roleId,
+					email,
+					creator_id creatorId,
+					create_date createDate,
+					editor_id editorId,
+					edit_date editDate,
+					is_use isUse
+			from t_admin_user
+		]]>
+        <where>
+            <if test="isUse != null">
+                is_use=#{isUse}
+            </if>
+            <if test="roleId != null">
+                and role_id=#{roleId}
+            </if>
+            <if test="nickname != null">
+                and (nickname like concat('%',#{nickname},'%'))
+            </if>
+            <if test="email != null">
+                and (email like concat('%',#{email},'%'))
+            </if>
+        </where>
+        <![CDATA[
+			order by id desc
+		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+
+    <select id="find" parameterType="map" resultType="adminUser" >
+        <![CDATA[
+			select
+					id,
+					name,
+					nickname,
+					password,
+					email,
+					role_id roleId,
+					is_use isUse,
+					create_date createDate,
+					creator_id creatorId,
+					edit_date editDate,
+					editor_id editorId,
+					is_use isUse
+			from t_admin_user
+		]]>
+        <where>
+            <if test="isUse != null">
+                is_use=#{isUse}
+            </if>
+            <if test="roleId != null">
+                and role_id=#{roleId}
+            </if>
+            <if test="name != null">
+                and name=#{name}
+            </if>
+            <if test="password != null">
+                and password=#{password}
+            </if>
+            <if test="nickname != null">
+                and (nickname like concat('%',#{nickname},'%'))
+            </if>
+            <if test="email != null">
+                and (email like concat('%',#{email},'%'))
+            </if>
+        </where>
+		<!-- order by id desc -->
+        <![CDATA[
+			order by id asc
+		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+			delete from t_admin_user where id in
+		]]>
+        <foreach collection="list" item="id"  open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

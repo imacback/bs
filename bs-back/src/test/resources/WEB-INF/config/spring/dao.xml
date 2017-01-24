@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/util 
+			http://www.springframework.org/schema/util/spring-util-4.0.xsd 
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd ">
+
+    <bean id="log-filter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+        <property name="resultSetLogEnabled" value="false"/>
+    </bean>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url">
+            <value>${jdbc.url}</value>
+        </property>
+        <property name="username">
+            <value>${jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.password}</value>
+        </property>
+        <property name="initialSize">
+            <value>5</value>
+        </property>
+        <property name="maxActive">
+            <value>10</value>
+        </property>
+        <property name="minIdle">
+            <value>3</value>
+        </property>
+        <property name="maxWait">
+            <value>30000</value>
+        </property>
+
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
+
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
+        <property name="minEvictableIdleTimeMillis" value="30000"/>
+
+        <property name="validationQuery">
+            <value>SELECT 'x'</value>
+        </property>
+        <property name="validationQueryTimeout" value="10"/>
+        <property name="testWhileIdle">
+            <value>true</value>
+        </property>
+        <property name="testOnBorrow">
+            <value>false</value>
+        </property>
+        <property name="testOnReturn">
+            <value>false</value>
+        </property>
+
+        <property name="removeAbandoned" value="true"/>
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandonedTimeout" value="1800"/>
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="logAbandoned" value="true"/>
+        <!-- 关闭abanded连接时输出错误日志 -->
+
+        <property name="proxyFilters">
+            <list>
+                <ref bean="log-filter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- MyBatis配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+		<property name="typeAliasesPackage" 
+			value="com.duoqu.rs.dao.dto,
+				   com.duoqu.rs.dao.entity,
+				   com.duoqu.rs.common.model" />
+		<!-- 显式指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath:/com/duoqu/rs/dao/repository/mapper/*Mapper.xml" />
+	</bean>
+	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<property name="basePackage" value="com.duoqu.rs.dao.repository" />
+		<property name="annotationClass" value="cn.aiyuedu.bs.dao.repository.MyBatisRepository"/>
+	</bean>
+	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="false"/>
+</beans>

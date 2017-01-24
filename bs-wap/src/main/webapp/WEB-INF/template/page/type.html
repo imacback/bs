@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<head>
+    <title>分类</title>
+    #include("../tools/meta.html")
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}" />
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION)
+    )
+</head>
+</head>
+<body>
+<div class="category">
+    #for(TypeVo vo1:typeList)
+        <section>
+            <nav class="u-5 clear">
+                <span class="bg_line"></span>
+                <span class="fg_title font_size_medium">${vo1.name}</span>
+            </nav>
+            <div class="u-5-list clear">
+                #for(TypeVo vo2:vo1.list)
+                    <a href="${prefStr}/ft/type/list.do?id=${vo2.id}&name=${vo2.name}" class="u-5-item">
+                        <div>
+                            <img data-src="${vo2.logo}" src="${RES_PATH}/images/icon_loading_category.png"/>
+                            <div class="u-5-item-info">
+                                <h3>${vo2.name}</h3>
+                                <p>${vo2.recommend}</p>
+                            </div>
+                        </div>
+                    </a>
+                #end
+            </div>
+        </section>
+    #end
+</div>
+<script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+<script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

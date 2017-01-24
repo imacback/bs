@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>搜索结果</title>
+    <% include("/share/meta.html"){} %>
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+</head>
+<body>
+    <% if (list.~size > 0) { %>
+        <div class="search">
+            <%
+            var ajaxUrl = CTX_PATH + /search/booksAjax.do?kw="+kw+"&p=";
+            %>
+            <% include("/component/load_more.html", {ajaxUrl:ajaxUrl}){} %>
+        </div>
+    <% } else { %>
+        <div class="search-none">
+            <div class="search-none-content">
+                <img class="ico" src="${RES_PATH}/images/error-ico.png" alt="" />
+                <p>抱歉，没有搜索到相关内容</p>
+            </div>
+        </div>
+    <% } %>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<% /* 双广告 */  %>
+<div class="banner-multi clear padding_left_right">
+    <% for(o in component.data){ %>
+    <a href="${componentTarget(o.dataType, o.data)}"><img data-src="${o.logo}"/></a>
+    <% } %>
+</div>

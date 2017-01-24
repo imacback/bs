@@ -1,0 +1,109 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="http://phone.fensebook.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <script src="/js/hm.js"></script><script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?4b2fa8f3ee227d277d7aa654f64a504a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <title>消费记录_盘丝读</title>
+</head>
+<body class="pagebackground">
+<% include("/share/top.html", {login:"1"}){} %>
+<div class="container">
+    <div class="top-alert">
+    </div>
+    <h1 class="page-title">交易记录查询</h1>
+    <div class="mod my-pocket">
+        <div class="bd">
+            您的余额：<span class="count">${user.virtualCorn}</span> 盘丝豆
+        </div>
+    </div>
+
+    <div class="mod block record-list">
+        <% if (page.totalPages > 1) { %>
+        <div class="hd">
+            <% if (page.pageNo > 1) { %><a href="/pay/list.do?pageNo=${page.pageNo-1}">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<% } %><% if (page.pageNo < page.totalPages) { %><a href="/pay/list.do?pageNo=${page.pageNo+1}">下一页</a><% } %>
+        </div>
+        <% } %>
+        <div class="bd">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>类型</th>
+                    <th>书名</th>
+                    <th>章节</th>
+                    <th>金额</th>
+                </tr>
+                </thead>
+                <% if (page.totalItems > 0) {
+                   for (o in page.result) { %>
+                <tbody>
+                <tr>
+                    <td>${o.createTime,dateFormat="yyyy.MM.dd HH:mm:ss"}</td>
+                    <td>阅读</td>
+                    <td>${o.bookName}</td>
+                    <td>${o.chapterName}</td>
+                    <td>${o.cost} 盘丝豆</td>
+                </tr>
+                </tbody>
+                <% } } else { %>
+                <tbody>
+                <tr>
+                    <td colspan="5">您还没有消费记录</td>
+                </tr>
+                </tbody>
+                <% } %>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="section nav">
+        <p>
+            <a href="http://m.fensebook.com/" style="">粉色</a>
+            <a href="http://m.fensebook.com/index.php/Book/Booklist" style="">书城</a>
+            <!--<a href="/index.php/Top" style="">排行</a>-->
+            <a href="http://m.fensebook.com/index.php/Pay" style="">充值</a>
+            <!--<a href="/index.php/Search" style="" >搜索</a>-->
+            <a href="http://m.fensebook.com/index.php/Index/Logout">退出</a>            </p>
+    </div>
+    <div class="section kefu">
+        <h4>客服</h4>
+        <p>
+            工作时间：周一到周日 9:00-24:00<br>
+            邮&nbsp;&nbsp;箱：kefu@fensebook.com<br>
+            电&nbsp;&nbsp;话：010-50854181(转8003) <br>
+            Q&nbsp;&nbsp;&nbsp;Q：3184323796<br>
+            微&nbsp;&nbsp;博：@粉色书城<br>
+            <span style="font-weight:bold">合&nbsp;&nbsp;作</span><br>
+            邮&nbsp;&nbsp;箱：allen@cmyd8.com<br>
+            电&nbsp;&nbsp;话：15811424990
+
+        </p>
+    </div>
+    <div class="section">
+        京ICP备15019114号-1
+    </div>
+    <div class="section copyright">
+        <p><span class="time">2015-07-28 17:50:10</span></p>
+        <p class="copy">Copyright © 2015 FenseBook.com All rights reserved.</p>
+    </div>
+</div>
+
+
+</body></html>

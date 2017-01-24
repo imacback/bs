@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.ComponentDao">
+
+    <insert id="insert" parameterType="component">
+        insert into t_component(
+                container_id,
+                name,
+                is_use,
+                type_id,
+                order_id,
+                memo,
+                title,
+                entry_title,
+                entry_data_type,
+                entry_data,
+                create_date,
+                creator_id,
+                edit_date,
+                editor_id,
+                icon,
+                font_color
+        ) values (
+                #{containerId},
+                #{name},
+                #{isUse},
+                #{typeId},
+                #{orderId},
+                #{memo},
+                #{title},
+                #{entryTitle},
+                #{entryDataType},
+                #{entryData},
+                #{createDate},
+                #{creatorId},
+                #{editDate},
+                #{editorId},
+                #{icon},
+                #{fontColor}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_component
+        ]]>
+        <where>
+            <if test="name != null">
+                name = #{name}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="get" parameterType="int" resultType="component">
+        <![CDATA[
+
+			select
+                    id,
+                    container_id containerId,
+                    name,
+                    is_use isUse,
+                    type_id typeId,
+                    order_id orderId,
+                    memo,
+                    title,
+                    entry_title entryTitle,
+                    entry_data_type entryDataType,
+                    entry_data entryData,
+                    create_date createDate,
+                    creator_id creatorId,
+                    edit_date editDate,
+                    editor_id editorId,
+                    icon,
+                    font_color fontColor
+			from t_component where id=#{id}
+
+        ]]>
+    </select>
+
+    <update id="update" parameterType="component">
+        update t_component
+        <set>
+            <if test="containerId != null">
+                container_id = #{containerId},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="isUse != null">
+                is_use = #{isUse},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+            <if test="memo != null">
+                memo = #{memo},
+            </if>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="entryTitle != null">
+                entry_title = #{entryTitle},
+            </if>
+            <if test="entryDataType != null">
+                entry_data_type = #{entryDataType},
+            </if>
+            <if test="entryData != null">
+                entry_data = #{entryData},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId},
+            </if>
+            <if test="editDate != null">
+                edit_date = #{editDate},
+            </if>
+            <if test="editorId != null">
+                editor_id = #{editorId},
+            </if>
+            <if test="icon != null">
+                icon = #{icon},
+            </if>
+            <if test="fontColor != null">
+                font_color = #{fontColor}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_component
+        ]]>
+        <where>
+            <if test="containerId != null">
+                container_id = #{containerId}
+            </if>
+            <if test="isUse != null">
+                and is_use = #{isUse}
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    id = #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="component">
+        <![CDATA[
+    			select
+                         id,
+                         container_id containerId,
+                         name,
+                         is_use isUse,
+                         type_id typeId,
+                         order_id orderId,
+                         title,
+                         entry_title entryTitle,
+                         entry_data_type entryDataType,
+                         entry_data entryData,
+                         icon,
+                         font_color fontColor
+    			from t_component
+    		]]>
+        <where>
+            <if test="containerId != null">
+                container_id = #{containerId}
+            </if>
+            <if test="isUse != null">
+                and is_use = #{isUse}
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                       id = #{id}
+                   ]]>
+            </if>
+        </where>
+        <![CDATA[
+    			order by order_id asc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+
+    <select id="getComponentDtos" parameterType="map" resultType="componentDto">
+        <![CDATA[
+    			select
+                         id,
+                         container_id containerId,
+                         name,
+                         is_use isUse,
+                         type_id typeId,
+                         order_id orderId,
+                         memo,
+                         title,
+                         entry_title entryTitle,
+                         entry_data_type entryDataType,
+                         entry_data entryData,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId,
+                         icon,
+                         font_color fontColor
+    			from t_component
+    		]]>
+        <where>
+            <if test="containerId != null">
+                container_id = #{containerId}
+            </if>
+            <if test="isUse != null">
+                and is_use = #{isUse}
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                       id = #{id}
+                   ]]>
+            </if>
+        </where>
+        <![CDATA[
+    			order by order_id asc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+                delete from t_component where id in
+            ]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--用于从Mysql至mongodb的数据迁移-->
+    <select id="findAll" resultType="component">
+        <![CDATA[
+    			select
+                         id,
+                         container_id containerId,
+                         name,
+                         is_use isUse,
+                         type_id typeId,
+                         order_id orderId,
+                         memo,
+                         title,
+                         entry_title entryTitle,
+                         entry_data_type entryDataType,
+                         entry_data entryData,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId,
+                         icon,
+                         font_color fontColor
+    			from t_component
+    			order by id asc
+    		]]>
+    </select>
+</mapper>

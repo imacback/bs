@@ -1,0 +1,26 @@
+<div class="page-list" id="ajaxList">
+    <% for(o in books){ %>
+    <a href="/book/show.do?bid=${o.id}" class="u-3 clear">
+        <img data-src="${o.largePic}" src="${o.largePic}"/>
+        <aside>
+            <p>${o.name} </p>
+            <p class="font_size_small">${o.author}</p>
+            <p class="font_size_small">${o.shortMemo}</p>
+        </aside>
+    </a>
+    <% } %>
+</div>
+<script>
+    var $_list = {
+        url: "${ajaxUrl}",
+        pref_str: "${CTX_PATH}",
+        max: 20
+    };
+</script>
+<script src="${RES_PATH}js/zepto.min.js${RES_VERSION}"></script>
+<!--
+<script src="${RES_PATH}js/reader.min.js${RES_VERSION}"></script>
+-->
+<script src="/js/reader.js"></script>
+
+

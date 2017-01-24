@@ -1,0 +1,35 @@
+##书籍与频道（小图）
+#define(BookChannelVo comp)
+#set(
+    compPrefStr = pref(prefStr,'cp',comp.id)
+)
+#set(color = 'color:  rgba(' + comp.styleColor + ',1)')
+#set(linecolor = 'border-bottom-color: rgba(' + comp.styleColor + ',0.3)')
+<section>
+    <nav class="u-1 u-1-2 font_size_medium" style="${linecolor}">
+        <img src="${comp.logo}" alt="" />
+        <span style="${color}">${comp.name}</span>
+        #if(comp.url!=null&&comp.url!='')
+        <a class="more" href="${compPrefStr + comp.url}">${comp.entryName}
+            <img src="${RES_PATH}/images/icon-arrow.png" alt="" />
+        </a>
+        #end
+    </nav>
+    #set(BookVo book1 = comp.bookList[0])
+    <div class="padding_not_top clear-padding sepcial-color">
+        <a href="${compPrefStr}/ft/book/detail.do?id=${book1.id}" class="u-3 clear">
+            <img data-src="${book1.smallPic}" src="${RES_PATH}/images/book_default.jpg"/>
+            <aside>
+                <p>${book1.name}</p>
+                <p class="font_size_small">${book1.author} </p>
+                <p class="font_size_small">${book1.tinyMemo}</p>
+            </aside>
+        </a>
+    </div>
+    <article class="u-4">
+        #for(BookVo book:comp.bookList)
+            #continue(for.index<2)
+            <a href="${compPrefStr}/ft/book/detail.do?id=${book.id}">${book.name}</a>
+        #end
+    </article>
+</section>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>个人资料</title>
+        #include("../tools/meta.html")
+        <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}" />
+        #define(User user)
+        #set(
+            prefStr = pref(webroot(),SERVER_VERSION,'u',user.id)
+        )
+        <script type="text/javascript">
+            var $_list = {
+                url: "${prefStr}/ft/user/save.do"
+            };
+        </script>
+        <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+        <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+    </head>
+    <body>
+        <input type="hidden" name="id" value="${user.id}">
+        <div class="user-profile">
+            <div class="info-item">
+                <span class="nickname">${user.userName}</span>
+                <span class="reg-time">注册：${user.createDate.format("yyyy-MM-dd")}</span>
+            </div>
+            <div class="info-list" id="userData">
+                <div class="info-list-item">
+                    <label>昵称</label>
+                    <p><input type="text" name="nickName" placeholder="2-10个中英文、数字、下划线" value="${user.nickName}" /></p>
+                </div>
+                <div class="info-list-item">
+                    <label>性别</label>
+                    <div class="sex-sel clear" id="sex-sel">
+                        <span class="${user.sex==1?'hover':''}" data-index="1">帅哥</span>
+                        <span class="${user.sex==2?'hover':''}" data-index="2">美女</span>
+                        <span class="${user.sex==0?'hover':''}" data-index="0">保密</span>
+                    </div>
+                </div>
+                <div class="info-list-item">
+                    <label>手机</label>
+                    <p><input type="text" name="mobile" placeholder="11位数字" value="${user.mobile}" /></p>
+                </div>
+                <div class="info-list-item">
+                    <label>生日</label>
+                    <p><input type="text" name="birthday" placeholder="20140101" value="${user.birthday!=null?user.birthday.format('yyyyMMdd'):''}"/></p>
+                </div>
+            </div>
+            <a href="" class="mod-pwd" id="mod-pwd">
+                <span>修改密码</span> <img src="${RES_PATH}/images/icon-arrow.png" alt="" />
+            </a>
+
+            <a class="btn-submit" id="btn-submit-user-profile">保存</a>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,36 @@
+<% /* 书籍与频道（大图） */  %>
+<section>
+    <nav class="u-1 u-1-3 font_size_medium" style="border-bottom-color:rgba(${component.fontColor},0.3)">
+        <img src="${component.icon}" alt="" />
+        <span style="color:rgba(${component.fontColor},1)">${component.name}</span>
+        <% if (has(component.url) && component.url != '') { %>
+        <a class="more" href="${component.url}">${component.entryName}
+            <img src="${RES_PATH}/images/icon-arrow.png" alt="" />
+        </a>
+        <% } %>
+    </nav>
+    <% if (has(component.books)) { %>
+    <div class="u-2-wrapper">
+        <article class="u-2 clear">
+            <%
+            var size = component.books.~size;
+            var count = size > 3? 3: size;
+            for(var i=1;i<count;i++){
+            %>
+                <article>
+                    <a href="/book/show.do?bid=${component.books[i].id}">
+                        <img data-src="${component.books[i].largePic}" src="${DEFAULT_COVER}"/>
+                    </a>
+                </article>
+            <% } %>
+        </article>
+    </div>
+    <article class="u-4">
+        <%
+        for(var i=4;i<size;i++){
+        %>
+            <a href="/book/show.do?bid=${component.books[i].id}">${component.books[i].name}</a>
+        <% } %>
+    </article>
+    <% } %>
+</section>

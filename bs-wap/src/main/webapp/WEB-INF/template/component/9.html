@@ -1,0 +1,19 @@
+<section>
+    <nav class="u-5 clear">
+        <span class="bg_line"></span>
+        <span class="fg_title font_size_medium">${component.name}</span>
+    </nav>
+    <div class="u-5-list clear">
+        <% for(o in component.data) { %>
+            <a href="${componentTarget(o.dataType, o.data)}" class="u-5-item">
+                <div>
+                    <img data-src="${data.logo}" src="${RES_PATH}/images/icon_loading_category.png"/>
+                    <div class="u-5-item-info">
+                        <h3>${o.title}</h3>
+                        <p>${o.memo}</p>
+                    </div>
+                </div>
+            </a>
+        <% } %>
+    </div>
+</section>

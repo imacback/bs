@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.UpgradeDao">
+    <select id="getMaxVersion"   parameterType="upgrade" resultType="upgrade" >
+        SELECT
+        id,
+        version_name versionName,
+        major_version majorVersion,
+        minor_version minorVersion,
+        ditch_id ditchId,
+        platform_id platformId,
+        content,
+        package_url packageUrl,
+        publish_date publishDate,
+        is_publish isPublish,
+        is_force isForce,
+        create_date createDate,
+        creator_id creatorId,
+        edit_date editDate,
+        editor_id editorId
+        from t_upgrade where is_publish =1  and  platform_id =#{platformId} and ditch_id =#{ditchId} ORDER BY major_version DESC ,minor_version  DESC LIMIT 0,1
+    </select>
+
+    <select id="getCountByVersionAndPlant" resultType="int" parameterType="upgrade">
+        SELECT count(*) from t_upgrade where major_version=#{majorVersion} and minor_version=#{minorVersion} and ditch_id=#{ditchId} and platform_id =#{platformId}
+    </select>
+
+    <insert id="insert" parameterType="upgrade" useGeneratedKeys="true" keyProperty="id">
+        insert into t_upgrade(
+            version_name,
+            major_version,
+            minor_version,
+            ditch_id,
+            platform_id,
+            content,
+            package_url,
+            publish_date,
+            is_publish,
+            is_force,
+            create_date,
+            creator_id,
+            edit_date,
+            editor_id
+        ) values (
+            #{versionName},
+            #{majorVersion},
+            #{minorVersion},
+            #{ditchId},
+            #{platformId},
+            #{content},
+            #{packageUrl},
+            #{publishDate},
+            #{isPublish},
+            #{isForce},
+            #{createDate},
+            #{creatorId},
+            #{editDate},
+            #{editorId}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_upgrade
+        ]]>
+        <where>
+            <if test="majorVersion != null">
+                major_version = #{majorVersion}
+            </if>
+            <if test="minorVersion != null">
+                and minor_version = #{minorVersion}
+            </if>
+            <if test="platformId != null">
+                and platform_id = #{platformId}
+            </if>
+            <if test="ditchId != null">
+                and ditch_id = #{ditchId}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="get" parameterType="int" resultType="upgrade" >
+        <![CDATA[
+			select
+                    id,
+                    version_name versionName,
+                    major_version majorVersion,
+                    minor_version minorVersion,
+                    ditch_id ditchId,
+                    platform_id platformId,
+                    content,
+                    package_url packageUrl,
+                    publish_date publishDate,
+                    is_publish isPublish,
+                    is_force isForce,
+                    create_date createDate,
+                    creator_id creatorId,
+                    edit_date editDate,
+                    editor_id editorId
+			from t_upgrade where id=#{id}
+		]]>
+    </select>
+
+    <update id="update" parameterType="upgrade">
+        update t_upgrade
+        <set>
+
+            <if test="versionName != null">
+                version_name = #{versionName},
+            </if>
+
+            <if test="majorVersion != null">
+                major_version = #{majorVersion},
+            </if>
+
+            <if test="minorVersion != null">
+                minor_version = #{minorVersion},
+            </if>
+
+            <if test="ditchId != null">
+                ditch_id = #{ditchId},
+            </if>
+
+            <if test="platformId != null">
+                platform_id = #{platformId},
+            </if>
+
+            <if test="content != null">
+                content = #{content},
+            </if>
+
+            <if test="packageUrl != null">
+                package_url = #{packageUrl},
+            </if>
+
+            <if test="publishDate != null">
+                publish_date = #{publishDate},
+            </if>
+
+            <if test="isPublish != null">
+                is_publish = #{isPublish},
+            </if>
+
+            <if test="isForce != null">
+                is_force = #{isForce},
+            </if>
+
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+
+            <if test="creatorId != null">
+                creator_id = #{creatorId},
+            </if>
+
+            <if test="editDate != null">
+                edit_date = #{editDate},
+            </if>
+
+            <if test="editorId != null">
+                editor_id = #{editorId}
+            </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_upgrade
+        ]]>
+        <where>
+            <if test="platformId != null">
+                platform_id = #{platformId}
+            </if>
+            <if test="ditchId != null">
+                and ditch_id = #{ditchId}
+            </if>
+            <if test="versionName != null">
+                and (version_name like concat('%',#{versionName},'%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="upgrade" >
+        <![CDATA[
+    			select
+                         id,
+                         version_name versionName,
+                         major_version majorVersion,
+                         minor_version minorVersion,
+                         ditch_id ditchId,
+                         platform_id platformId,
+                         content content,
+                         package_url packageUrl,
+                         publish_date publishDate,
+                         is_publish isPublish,
+                         is_force isForce
+    			from t_upgrade
+    		]]>
+        <where>
+            <if test="isPublish != null">
+                is_publish = #{isPublish}
+            </if>
+            <if test="platformId != null">
+                and platform_id = #{platformId}
+            </if>
+            <if test="ditchId != null">
+                and ditch_id = #{ditchId}
+            </if>
+            <if test="versionName != null">
+                and (version_name like concat('%',#{versionName},'%'))
+            </if>
+            <if test="publishDate">
+                <![CDATA[
+                    and #{publishDate} < now()
+                ]]>
+            </if>
+        </where>
+        <![CDATA[
+    			order by id desc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+
+    <select id="getUpgradeDtos" parameterType="map" resultType="upgradeDto" >
+        <![CDATA[
+    			select
+                         id,
+                         version_name versionName,
+                         major_version majorVersion,
+                         minor_version minorVersion,
+                         ditch_id ditchId,
+                         platform_id platformId,
+                         content content,
+                         package_url packageUrl,
+                         publish_date publishDate,
+                         is_publish isPublish,
+                         is_force isForce,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_upgrade
+    		]]>
+        <where>
+            <if test="platformId != null">
+                platform_id = #{platformId}
+            </if>
+            <if test="ditchId != null">
+                and ditch_id = #{ditchId}
+            </if>
+            <if test="versionName != null">
+                and (version_name like concat('%',#{versionName},'%'))
+            </if>
+        </where>
+        <![CDATA[
+    			order by id desc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+                delete from t_upgrade where id in
+            ]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--用于从Mysql至mongodb的数据迁移-->
+    <select id="findAll" resultType="upgrade" >
+        <![CDATA[
+    			select
+                         id,
+                         version_name versionName,
+                         major_version majorVersion,
+                         minor_version minorVersion,
+                         ditch_id ditchId,
+                         platform_id platformId,
+                         content content,
+                         package_url packageUrl,
+                         publish_date publishDate,
+                         is_publish isPublish,
+                         is_force isForce,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_upgrade
+    			order by id asc
+    		]]>
+    </select>
+</mapper>

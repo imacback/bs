@@ -1,0 +1,44 @@
+<div class="header">
+    <a href="/container/show.do?id=1" class="logo"><img src="/img/logo.png" alt="盘丝读"></a>
+    <div class="top">
+        <div class="nav">
+            <a href="/container/show.do?id=1" style="">
+                <img src="/img/nav_01.png" alt="书城">
+            </a>
+            <a href="/container/show.do?id=18" style="">
+                <img src="/img/nav_02.png" alt="排行">
+            </a>
+            <a href="/recharge/entry.do" style="">
+                <img src="/img/nav_03.png" alt="充值">
+            </a>
+            <a href="/user/login.do" style="">
+                <img src="/img/nav_04.png" alt="登录">
+            </a>
+        </div>
+    </div>
+    <div class="bottom logined" style="background-color:#d1ecc3; box-shadow: 0px 1px 0px #C1BDC4;">
+        <% if (has(login) && login == 1) { %>
+        <div class="bottom " style="background-color:#d1ecc3; box-shadow: 0px 1px 0px #C1BDC4;">
+            <div class="accounts">
+                <a href="/user/register.do">注册</a>
+            </div>
+        </div>
+        <% } else if (has(register) && register == 1) { %>
+        <div class="bottom " style="background-color:#d1ecc3; box-shadow: 0px 1px 0px #C1BDC4;">
+            <div class="accounts">
+                <a href="/user/login.do">登录</a>
+            </div>
+        </div>
+        <% } else { %>
+        <div style=" float:right; margin-right:10px;">
+            <img src="/img/tou.png" style=" margin-bottom:-5px; margin-right:-10px;">
+            <a href="/user/info.do" class="my-name" style="font-size:12px; font-weight:400;"> <% if (isEmpty(user.nickname)) { %>${strutil.subStringTo(param.uid,0,4)}...<% } else { %>${user.nickname}<% } %></a>
+        </div>
+        <!-- 
+        <div style=" float:left; margin-right:10px;">
+            <a href="/bookshelf/show.do" style="font-size:12px; font-weight:400;">我的书架</a>
+        </div>
+         -->
+        <% } %>
+    </div>
+</div>

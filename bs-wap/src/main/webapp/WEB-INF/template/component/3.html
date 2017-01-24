@@ -1,0 +1,20 @@
+<% /* 文字导航 */  %>
+<section class="nav_1">
+    <div class="tb">
+        <% if (component.groups.~size > 0) { %>
+        <% for (o in component.groups[0].list) { %>
+            <div class="tb_cell w33">
+                <a href="${componentTarget(o.dataType, o.data)}" class="nav_item font_size_medium bg_color${oLP.index-1}">${o.title}</a>
+            </div>
+        <% } } %>
+    </div>
+    <% if (component.groups.~size > 1) { %>
+        <div class="gap_line"><!-- gap_line --></div>
+        <% for (o in component.groups[1].list) { %>
+            <a class="notice padding_all" href="${componentTarget(o.dataType, o.data)}">
+                <img src="${RES_PATH}/images/icon_notice.png" alt="" />
+                <span>${o.title}</span>
+            </a>
+        <% } %>
+    <% } %>
+</section>

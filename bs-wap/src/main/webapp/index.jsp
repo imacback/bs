@@ -1,0 +1,1 @@
+<jsp:forward page="/container/show.do?id=1" />

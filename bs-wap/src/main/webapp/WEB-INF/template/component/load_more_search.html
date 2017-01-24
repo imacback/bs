@@ -1,0 +1,21 @@
+<div class="page-list" id="ajaxList">
+    #for(org.apache.solr.common.SolrDocument vo:list)
+        <a href="${prefStr}/ft/book/detail.do?id=${vo.id}" class="u-3 clear">
+            <img data-src="${vo.smallPic}" src="${DEFAULT_COVER}">
+            <aside>
+                <p>${vo.bookName} </p>
+                <p class="font_size_small">${vo.author}</p>
+                <p class="font_size_small">${vo.memo}</p>
+            </aside>
+        </a>
+    #end
+</div>
+<script>
+    var $_list = {
+        url: "${ajaxUrl}",
+        pref_str: "${prefStr}",
+        max: 20
+    };
+</script>
+<script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+<script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>

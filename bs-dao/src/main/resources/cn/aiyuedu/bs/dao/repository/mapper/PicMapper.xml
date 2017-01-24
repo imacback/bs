@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.PicDao">
+
+    <insert id="insert" parameterType="picBase">
+        insert into t_pic(
+        target_type,
+        target_id,
+        url,
+        width,
+        height
+        ) values (
+        #{targetType},
+        #{targetId},
+        #{url},
+        #{width},
+        #{height}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_pic(
+        target_type,
+        target_id,
+        url,
+        width,
+        height
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.targetType},
+            #{item.targetId},
+            #{item.url},
+            #{item.width},
+            #{item.height}
+            )
+        </foreach>
+    </insert>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_pic
+        ]]>
+        <where>
+            <if test="targetType != null">
+                target_type = #{targetType}
+            </if>
+            <if test="targetId != null">
+                and target_id = #{targetId}
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="picBase" >
+        <![CDATA[
+    			select
+                         id,
+                         target_type targetType,
+                         target_id targetId,
+                         url url,
+                         width width,
+                         height height
+    			from t_pic
+    		]]>
+        <where>
+            <if test="targetType != null">
+                target_type = #{targetType}
+            </if>
+            <if test="targetId != null">
+                and target_id = #{targetId}
+            </if>
+        </where>
+        <![CDATA[
+    			order by id desc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="map">
+        delete from t_pic
+        <where>
+            <if test="targetType != null">
+                target_type = #{targetType}
+            </if>
+            <if test="targetId != null">
+                and target_id = #{targetId}
+            </if>
+        </where>
+    </delete>
+
+    <!-- 获取启动页广告的图片信息 -->
+    <select id="findAdvStartupPic" parameterType="map" resultType="picBaseDto">
+        <![CDATA[
+    			select
+                         id,
+                         target_type targetType,
+                         target_id targetId,
+                         url url,
+                         width width,
+                         height height
+    			from t_pic
+    		]]>
+        <where>
+            <if test="targetType != null">
+                target_type = #{targetType}
+            </if>
+            <if test="targetId != null">
+                and target_id = #{targetId}
+            </if>
+        </where>
+        <![CDATA[
+    			order by id desc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+</mapper>

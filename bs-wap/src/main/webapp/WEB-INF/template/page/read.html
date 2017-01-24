@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/read.js"></script>
+    <title>${book.name}_${chapter.name}_爱悦读</title>
+    <% include("/share/include.html"){} %>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/read.css" media="all">
+</head>
+<body unselectable="on" style="-moz-user-select:none;-webkit-user-select:none;" onselectstart="return false;">
+<input type="hidden" id="bookId" value="${chapter.bookId}" />
+<input type="hidden" id="chapterId" value="${chapter.id}" />
+<input type="hidden" id="userId" value="${user.id}" />
+<% include("/include/nav.html"){} %>
+<div <% if(isLight==0) { %>class="content"<% } else { %>class="content-lamp"<% } %>>
+    <header class="head" id="headBox">
+        <a class="leftbtn" id="headBtn" href="/book/show.do?bid=${chapter.bookId}"></a>
+        <label>正文</label>
+    </header>
+    <!-- begin 中间内容部分-->
+    <div id="main">
+        <div class="main-box">
+            <% if(style == "") { %>
+            <div class="read-box">
+                <% } else { %>
+                <div class="${style}">
+                    <% } %>
+                    <header class="set">
+                        <% if(isLight == 0) { %>
+                        <a class="lamp"
+                           href="/chapter/read.do?bid=${chapter.bookId}&orderId=${chapter.orderId}&maxChaper=${maxChaper}&isLight=1&fontSize=${font}&spacing=${spacing}">
+                            <strong>关灯</strong></a>
+                        <% } else { %>
+                        <a class="lamp"
+                           href="/chapter/read.do?bid=${chapter.bookId}&orderId=${chapter.orderId}&maxChaper=${maxChaper}&isLight=0&fontSize=${font}&spacing=${spacing}&style=${style1}">
+                            <strong>开灯</strong></a>
+                        <% } %>
+                        <a class="set-sw"
+                           href="/book/setup.do?bid=${chapter.bookId}&orderId=${chapter.orderId}&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}"><span>设置</span></a>
+                        <% if(chapter.orderId==1) { %>
+                        <a><span class="null">上一章</span> </a>
+                        <% } else { %>
+                        <a href="/chapter/read.do?bid=${chapter.bookId}&orderId=${chapter.orderId}&isNext=-1&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}"><span>上一章</span></a>
+                        <% } %>
+                        <% if(chapter.orderId==maxChaper) { %>
+                        <a> <span class="null">下一章</span> </a>
+                        <% } else { %>
+                        <a href="/chapter/read.do?bid=${chapter.bookId}&orderId=${chapter.orderId}&isNext=1&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}"><span>下一章</span></a>
+                        <% } %>
+                    </header>
+                    <article>
+                        <h2 class="font_size_small" id="chapter">${chapter.name}</h2>
+
+                        <div class="wire"></div>
+                        <% if(font=="" || spacing=="") { %>
+                        <div id="content" class="wrapper p-fr-8" style="font-size:1em;line-height:180%;">
+                        <% } else { %>
+                        <div id="content" class="wrapper p-fr-8" style="font-size:${font};line-height:${spacing}%;">
+                        <% } %>
+                            &nbsp;
+                        </div>
+                    </article>
+                    <div class="page-chapter">
+                        <% if(chapter.orderId==1) { %>
+                        <a><span class="null">上一章</span> </a>
+                        <% } else { %>
+                        <a href="/chapter/read.do?bid=${chapter.bookId}&orderId=${chapter.orderId}&isNext=-1&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}"><span>上一章</span></a>
+                        <% } %>
+                        <a href="/chapter/catalog.do?bid=${chapter.bookId}&start=0&sort=true&maxChaper=${maxChaper}&orderId=${chapter.orderId}&mark=0&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}"><span>目录</span></a>
+                        <% if(chapter.orderId==maxChaper) { %>
+                        <a> <span class="null">下一章</span></a>
+                        <% } else { %>
+                        <a href="/chapter/read.do?bid=${chapter.bookId}&orderId=${chapter.orderId}&isNext=1&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}"><span>下一章</span></a>
+                        <% } %>
+                    </div>
+
+                    <footer id="foot">
+                        <p>&nbsp;<br/>&nbsp;</p>
+                    </footer>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- end 中间内容部分-->
+    </div>
+    <% include("/component/buyConfirm.html", {user:user, chapter:chapter, book:book}){} %>
+    <% include("/component/registerConfirm.html"){} %>
+    <div id="ku" style="width:100%;position:fixed; top:140px; display:none;">
+        <div style="width:160px;background-color:#fff0f5; margin: 0 auto; border:8px solid #ff69b4; border-radius:5px;" >
+            <div>
+                <div style="padding:0px 5px; width:25%; float:left;"><img src="/img/ku.jpg" /></div>
+                <div style=" padding-top:10px;">余额不足！</div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="xiao" style="width:100%;position:fixed; top:140px; display:none; ">
+        <div style="width:160px;background-color:#fff0f5; margin: 0 auto; border:8px solid #ff69b4; border-radius:5px;" >
+            <div>
+                <div style="padding:0px 5px; width:25%; float:left;"><img src="/img/xiao.jpg" /></div>
+                <div style=" padding-top:10px;">订购成功！</div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

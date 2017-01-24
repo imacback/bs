@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.statis.repository.RankingLogDayDao">
+
+    <insert id="insert" parameterType="rankingLog">
+        insert into t_log_day(
+        day,
+        book_id,
+        amount
+        ) values (
+        #{day},
+        #{bookId},
+        #{amount}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_log_day(
+        day,
+        book_id,
+        amount
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.day},
+            #{item.bookId},
+            #{item.amount}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteBook">
+        <![CDATA[
+			delete from t_rs_log_book where book_id>0
+		]]>
+    </delete>
+
+    <insert id="insertBatchBook" parameterType="java.util.List">
+        insert into t_rs_log_book(
+        book_id,
+        category_id,
+        type
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.bookId},
+            #{item.categoryId},
+            1
+            )
+        </foreach>
+    </insert>
+
+    <select id="count" parameterType="map" resultType="int">
+        <![CDATA[
+			select count(*) from t_log_day where day = #{day}
+		]]>
+    </select>
+
+    <select id="find" parameterType="map" resultType="rankingLog">
+        <![CDATA[
+			select
+			        day,
+					book_id bookId,
+					amount
+			from t_log_day where day = #{day} order by amount desc
+		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="map">
+        <![CDATA[
+			delete from t_log_day where day = #{day}
+		]]>
+    </delete>
+
+    <select id="statis" parameterType="map" resultType="ranking">
+        <![CDATA[
+			select bookId, sum(amount) amount from ((select d.book_id bookId, sum(d.amount) amount from t_log_day d
+		]]>
+        <where>
+            exists (select book_id from t_rs_log_book b where d.book_id=b.book_id
+            <if test="categoryId != null">
+                and b.category_id=#{categoryId}
+            </if>
+            )
+            <if test="startDate != null">
+                and day>=#{startDate} and #{endDate}>day
+            </if>
+        </where>
+        group by book_id order by amount desc, book_id desc)
+        union
+        (select book_id bookId, amount from t_rs_log_book
+        <where>
+            <if test="categoryId != null">
+                category_id=#{categoryId}
+            </if>
+        </where>
+        )) a
+        group by bookId order by amount desc, bookId desc
+    </select>
+</mapper>

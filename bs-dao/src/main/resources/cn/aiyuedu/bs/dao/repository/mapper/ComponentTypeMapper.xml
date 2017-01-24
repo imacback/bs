@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.ComponentTypeDao">
+
+    <insert id="insert" parameterType="componentType">
+        insert into t_component_type(
+                name,
+                is_use,
+                data_limit,
+                data_group,
+                template,
+                create_date,
+                creator_id,
+                edit_date,
+                editor_id
+        ) values (
+                #{name},
+                #{isUse},
+                #{dataLimit},
+                #{dataGroup},
+                #{template},
+                #{createDate},
+                #{creatorId},
+                #{editDate},
+                #{editorId}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_component_type
+        ]]>
+        <where>
+            <if test="name != null">
+                name = #{name}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="get" parameterType="int" resultType="componentType">
+        <![CDATA[
+
+			select
+                    id,
+                    name,
+                    is_use isUse,
+                    data_limit dataLimit,
+                    data_group dataGroup,
+                    template,
+                    create_date createDate,
+                    creator_id creatorId,
+                    edit_date editDate,
+                    editor_id editorId
+			from t_component_type where id=#{id}
+
+        ]]>
+    </select>
+
+    <update id="update" parameterType="componentType">
+        update t_component_type
+        <set>
+
+            <if test="name != null">
+                name = #{name},
+            </if>
+
+            <if test="isUse != null">
+                is_use = #{isUse},
+            </if>
+
+            <if test="dataLimit != null">
+                data_limit = #{dataLimit},
+            </if>
+
+            <if test="dataGroup != null">
+                data_group = #{dataGroup},
+            </if>
+
+            <if test="template != null">
+                template = #{template},
+            </if>
+
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+
+            <if test="creatorId != null">
+                creator_id = #{creatorId},
+            </if>
+
+            <if test="editDate != null">
+                edit_date = #{editDate},
+            </if>
+
+            <if test="editorId != null">
+                editor_id = #{editorId}
+            </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_component_type
+        ]]>
+        <where>
+            <if test="name != null">
+                (name like concat('%',#{name},'%'))
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    and id = #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="componentType">
+        <![CDATA[
+    			select
+                         id,
+                         name,
+                         is_use isUse,
+                         data_limit dataLimit,
+                         data_group dataGroup,
+                         template,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_component_type
+    		]]>
+        <where>
+            <if test="name != null">
+                (name like concat('%',#{name},'%'))
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                       and id = #{id}
+                   ]]>
+            </if>
+        </where>
+        <![CDATA[
+    			order by id desc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+                delete from t_component_type where id in
+            ]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--用于从Mysql至mongodb的数据迁移-->
+    <select id="findAll" resultType="componentType">
+        <![CDATA[
+    			select
+                         id,
+                         name,
+                         is_use isUse,
+                         data_limit dataLimit,
+                         data_group dataGroup,
+                         template,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_component_type
+    			order by id asc
+    		]]>
+    </select>
+</mapper>

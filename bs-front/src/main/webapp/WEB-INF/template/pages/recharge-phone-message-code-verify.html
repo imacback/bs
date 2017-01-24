@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>${paySwitchName}</title>
+        #include("../tools/meta.html")
+
+        <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+        <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+        <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+    </head>
+    <body class="body_phone_code">
+        <div class="recharge_phone_message_code_verify">
+            <div class="order_header">
+                <div class="username"><span>充值手机号：</span>${telNum}</div>
+                <div class="account"><span>充值的金额：</span>${amount}元</div>
+            </div>
+            <div class="order">
+                <div class="form_wrapper">
+                    <div class="notice_info">
+                        <img src="${RES_PATH}/images/icon_notice.png" alt=""/>
+                        <p>验证码已通过短信的形式下发到您的手机里，请及时查看验证码</p>
+                    </div>
+                    <form action="">
+                        <div class="input_item">
+                            <div class="recharge_phone_message_input_item">
+                                <img src="${RES_PATH}/images/icon_code_verify.jpg" alt=""/>
+                                <div>
+                                    <input id="code_verify_input_phone_number" placeholder="请输入验证码"/>
+                                </div>
+                            </div>
+                            <button id="post_valid_code" data-order="${merTradeCode}" data-price="${payConfigId}" class="btn_green btn_gray_lighter" type="button">重新获取</button>
+                        </div>
+                        <button id="code_verify_input_submit" type="submit" data-order="${merTradeCode}" data-price="${payConfigId}" class="btn_green btn_orange recharge_phone_message_input_submit">确认提交</button>
+                    </form>
+                </div>
+                <div class="intro" id="intro">
+                    <div class="intro-inner">
+                        ${tips}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

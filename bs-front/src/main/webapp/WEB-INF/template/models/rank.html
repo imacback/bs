@@ -1,0 +1,30 @@
+##榜单
+#define(ComponentBaseVo comp)
+#set(
+    compPrefStr = pref(prefStr,'cp',comp.id)
+)
+#set(color = 'color:  rgba(' + comp.styleColor + ',1)')
+#set(linecolor = 'border-bottom-color: rgba(' + comp.styleColor + ',0.3)')
+<section>
+    <nav class="u-1 u-1-3 font_size_medium" style="${linecolor}">
+        <img src="${comp.logo}" alt="" /> <span style="${color}">${comp.name}</span>
+        #if(comp.url!=null&&comp.url!='')
+        <a class="more" href="${compPrefStr + comp.url}">${comp.entryName}
+            <img src="${RES_PATH}/images/icon-arrow.png" alt="" />
+        </a>
+        #end
+    </nav>
+    <div class="u-6 clear">
+        #for(DataBaseVo data:comp.list)
+            #if(for.index%3==1)
+                <div class="u-6-${for.index/3+1}">
+            #end
+                    <a href="${compPrefStr + data.url}">
+                        <span class="circle_bg_${for.index-1}">${for.index}</span>${data.name}
+                    </a>
+            #if(for.index%3==0||for.index==for.size)
+                </div>
+            #end
+        #end
+    </div>
+</section>

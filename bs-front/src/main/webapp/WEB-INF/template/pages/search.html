@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>搜索结果</title>
+    #include("../tools/meta.html")
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION)
+    )
+</head>
+<body>
+    #if(len(list)>0)
+        <div class="search">
+            #set(ajaxUrl=ctxpath()+"/ft/search/listAjax.do?kw="+kw+"&p=")
+            #include("../models/load_more.html",{"ajaxUrl":ajaxUrl,"prefStr":prefStr})
+        </div>
+    #else
+        <div class="search-none">
+            <div class="search-none-content">
+                <img class="ico" src="${RES_PATH}/images/error-ico.png" alt="" />
+                <p>抱歉，没有搜索到相关内容</p>
+            </div>
+        </div>
+    #end
+
+</body>
+</html>

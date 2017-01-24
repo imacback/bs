@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="bookIndexDao" class="cn.aiyuedu.bs.index.BookIndexDao">
+        <property name="bookSolrImpl" ref="bookSolrImpl"></property>
+    </bean>
+
+    <bean id="bookSolrImpl" class="cn.aiyuedu.bs.index.base.SolrDaoImpl">
+        <property name="solrServer" ref="bookSolrServer"></property>
+    </bean>
+
+    <bean id="bookSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg index="0" value="${solr.server.book}"></constructor-arg>
+    </bean>
+</beans>

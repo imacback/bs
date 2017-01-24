@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.AdvShelfDao">
+
+    <insert id="insert" parameterType="advShelf"  useGeneratedKeys="true" keyProperty="id">
+        insert into t_adv_shelf(
+                name,
+                type_id,
+                platform_id,
+                versions,
+                is_use_ditch,
+                ditch_ids,
+                status,
+                content_1,
+                url_1,
+                content_2,
+                url_2,
+                content_3,
+                url_3,
+                create_date,
+                creator_id,
+                edit_date,
+                editor_id
+        ) values (
+                #{name},
+                #{typeId},
+                #{platformId},
+                #{versions},
+                #{isUseDitch},
+                #{ditchIds},
+                #{status},
+                #{content1},
+                #{url1},
+                #{content2},
+                #{url2},
+                #{content3},
+                #{url3},
+                #{createDate},
+                #{creatorId},
+                #{editDate},
+                #{editorId}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_adv_shelf
+        ]]>
+        <where>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="get" parameterType="int" resultType="advShelf" >
+        <![CDATA[
+			select
+                id id,
+                name name,
+                type_id typeId,
+                platform_id platformId,
+                versions versions,
+                is_use_ditch isUseDitch,
+                ditch_ids ditchIds,
+                status status,
+                content_1 content1,
+                url_1 url1,
+                content_2 content2,
+                url_2 url2,
+                content_3 content3,
+                url_3 url3,
+                create_date createDate,
+                creator_id creatorId,
+                edit_date editDate,
+                editor_id editorId
+			from t_adv_shelf where id=#{id}
+		]]>
+    </select>
+
+    <update id="update" parameterType="advShelf">
+        update t_adv_shelf
+        <set>
+
+                 <if test="name != null">
+                    name = #{name},
+                 </if>
+
+                 <if test="typeId != null">
+                    type_id = #{typeId},
+                 </if>
+
+                 <if test="platformId != null">
+                    platform_id = #{platformId},
+                 </if>
+
+                 <if test="versions != null">
+                    versions = #{versions},
+                 </if>
+
+                 <if test="isUseDitch != null">
+                    is_use_ditch = #{isUseDitch},
+                 </if>
+
+                 <if test="ditchIds != null">
+                    ditch_ids = #{ditchIds},
+                 </if>
+
+                 <if test="status != null">
+                    status = #{status},
+                 </if>
+
+                 <if test="content1 != null">
+                    content_1 = #{content1},
+                 </if>
+
+                 <if test="url1 != null">
+                    url_1 = #{url1},
+                 </if>
+
+                 <if test="content2 != null">
+                    content_2 = #{content2},
+                 </if>
+
+                 <if test="url2 != null">
+                    url_2 = #{url2},
+                 </if>
+
+                 <if test="content3 != null">
+                    content_3 = #{content3},
+                 </if>
+
+                 <if test="url3 != null">
+                    url_3 = #{url3},
+                 </if>
+
+                 <if test="createDate != null">
+                    create_date = #{createDate},
+                 </if>
+
+                 <if test="creatorId != null">
+                    creator_id = #{creatorId},
+                 </if>
+
+                 <if test="editDate != null">
+                    edit_date = #{editDate},
+                 </if>
+
+                 <if test="editorId != null">
+                    editor_id = #{editorId}
+                 </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+     <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_adv_shelf
+        ]]>
+        <where>
+            <if test="id != null">
+                <![CDATA[
+                    id = #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="advShelf" >
+            <![CDATA[
+    			select
+                         id id,
+                         name name,
+                         type_id typeId,
+                         platform_id platformId,
+                         versions versions,
+                         is_use_ditch isUseDitch,
+                         ditch_ids ditchIds,
+                         status status,
+                         content_1 content1,
+                         url_1 url1,
+                         content_2 content2,
+                         url_2 url2,
+                         content_3 content3,
+                         url_3 url3,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_adv_shelf
+    		]]>
+            <where>
+               <if test="id != null">
+                   <![CDATA[
+                       id = #{id}
+                   ]]>
+               </if>
+            </where>
+            <![CDATA[
+    			order by id desc
+    		]]>
+            <if test="startIndex != null">
+                <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+            </if>
+        </select>
+
+        <delete id="delete" parameterType="list">
+            <![CDATA[
+                delete from t_adv_shelf where id in
+            ]]>
+            <foreach collection="list" item="id"  open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </delete>
+
+        <select id="queryShelfAdv" resultType="cn.aiyuedu.bs.common.model.AdvShelfBase">
+            select
+            id id,
+            name name,
+            type_id typeId,
+            platform_id platformId,
+            versions versions,
+            is_use_ditch isUseDitch,
+            ditch_ids ditchIds,
+            status status,
+            content_1 content1,
+            url_1 url1,
+            content_2 content2,
+            url_2 url2,
+            content_3 content3,
+            url_3 url3
+            from t_adv_shelf  where status=1
+            <![CDATA[
+    			order by edit_date desc
+    		]]>
+        </select>
+
+
+
+
+</mapper>

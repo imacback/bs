@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.RankingTotalDayDao">
+
+    <insert id="insert" parameterType="ranking">
+        insert into t_ranking_total_day(
+        book_id,
+        amount,
+        order_id
+        ) values (
+        #{bookId},
+        #{amount},
+        #{orderId}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into t_ranking_total_day(
+        book_id,
+        amount,
+        order_id
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.bookId},
+            #{item.amount},
+            #{item.orderId}
+            )
+        </foreach>
+    </insert>
+
+    <select id="count" parameterType="map" resultType="int">
+        <![CDATA[
+			select count(*) from t_ranking_total_day
+		]]>
+    </select>
+
+    <select id="getRankingDtos" parameterType="map" resultType="rankingDto">
+        <![CDATA[
+			select
+					book_id bookId,
+					amount,
+					order_id orderId
+			from t_ranking_total_day order by order_id
+		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+
+    <delete id="deleteAll" parameterType="map">
+        <![CDATA[
+			delete from t_ranking_total_day where book_id>0
+		]]>
+    </delete>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+			delete from t_ranking_total_day where book_id in
+		]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

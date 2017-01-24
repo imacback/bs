@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.MenuDao">
+
+	<select id="find" parameterType="map" resultType="menu" >
+		<![CDATA[
+			select
+					id,
+					text,
+					url,
+					order_id orderId,
+					parent_id parentId,
+					is_leaf isLeaf,
+					is_use isUse,
+					memo
+			from t_admin_menu
+		]]>
+		<where>
+            <!-- is_use = 1 -->
+            1=1
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+        </where>
+		<![CDATA[
+			order by id asc
+		]]>
+	</select>
+	
+	<select id="getMenusByRoleId" parameterType="map" resultType="menu" >
+		<![CDATA[
+			select
+					m.id,
+					text,
+					url,
+					order_id orderId,
+					parent_id parentId,
+					is_leaf isLeaf,
+					memo
+			from t_admin_menu m, t_admin_menu_role r
+		]]>
+		<where>
+			m.id=r.menu_id and r.role_id=#{roleId} and m.is_use=1
+            <if test="parentId != null">
+            	and m.parent_id = #{parentId}
+            </if>
+        </where>
+		<![CDATA[
+			order by m.order_id asc
+		]]>
+	</select>
+
+    <delete id="deleteByRoleId" parameterType="integer">
+        <![CDATA[
+			delete from t_admin_menu_role where role_id = #{roleId}
+		]]>
+    </delete>
+
+    <insert id="insertRoleMenu" parameterType="map">
+        insert into t_admin_menu_role(
+        role_id,
+        menu_id
+        ) values (
+        #{roleId},
+        #{menuId}
+        )
+    </insert>
+
+</mapper>

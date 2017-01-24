@@ -1,0 +1,7 @@
+##Banner广告
+#define(ComponentBaseVo comp)
+##if(comp.list.size()==1)
+    #for(DataBaseVo data:comp.list)
+    <a href="${data.url}" class="banner-single"><img data-src="${data.logo}"/></a>
+    #end
+##end

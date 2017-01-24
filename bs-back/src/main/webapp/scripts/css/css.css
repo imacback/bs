@@ -1,0 +1,160 @@
+.icon-search{
+	background-image: url(../icons/zoom.png) !important;
+}
+.icon-save{
+	background-image: url(../icons/disk.png) !important;
+}
+.icon-save_multiple{
+	background-image: url(../icons/disk_multiple.png) !important;
+}
+.icon-accept{
+	background-image: url(../icons/accept.png) !important;
+}
+.icon-cancel{
+	background-image: url(../icons/cancel.png) !important;
+}
+.icon-add{
+	background-image: url(../icons/add.png) !important;
+}
+.icon-cross{
+	background-image: url(../icons/cross.png) !important;
+}
+.icon-tick{
+	background-image: url(../icons/tick.png) !important;
+}
+.icon-edit{
+	background-image: url(../icons/page_edit.png) !important;
+}
+.icon-delete{
+	background-image: url(../icons/delete.png) !important;
+}
+.icon-table_delete{
+	background-image: url(../icons/table_delete.png) !important;
+}
+.icon-disconnect{
+	background-image: url(../icons/disconnect.png) !important;
+}
+.icon-key{
+	background-image: url(../icons/key.png) !important;
+}
+.icon-add16 {
+    background-image: url( ../icons/add16.gif ) !important;
+}
+.icon-add24 {
+    background-image: url( ../icons/add24.gif ) !important;
+}
+.icon-add32 {
+    background-image: url( ../icons/add.gif ) !important;
+}
+.icon-trash32 {
+    background-image: url( ../icons/trash.png ) !important;
+}
+.icon-install32 {
+    background-image: url( ../icons/install.png ) !important;
+}
+.icon-bug {
+    background-image: url( ../icons/bug.png ) !important;
+}
+.icon-wand {
+    background-image: url( ../icons/wand.png ) !important;
+}
+.icon-sport_soccer {
+    background-image: url( ../icons/sport_soccer.png ) !important;
+}
+.icon-unarchive32 {
+    background-image: url( ../icons/unarchive.png ) !important;
+}
+.icon-forward32 {
+    background-image: url( ../icons/forward.png ) !important;
+}
+.icon-refresh32 {
+    background-image: url( ../icons/refresh.png ) !important;
+}
+.icon-search32 {
+    background-image: url( ../icons/search.png ) !important;
+}
+.icon-plus32 {
+    background-image: url( ../icons/plus.png ) !important;
+}
+.icon-rosette {
+    background-image: url( ../icons/rosette.png ) !important;
+}
+.icon-refresh {
+    background-image: url( ../icons/arrow_refresh.png ) !important;
+}
+.icon-cog {
+    background-image: url( ../icons/cog.png ) !important;
+}
+.icon-paste {
+    background-image: url( ../icons/page_paste.png ) !important;
+}
+.icon-eye {
+    background-image: url( ../icons/eye.png ) !important;
+}
+.icon-database_add {
+    background-image: url( ../icons/database_add.png ) !important;
+}
+.icon-database_refresh {
+    background-image: url( ../icons/database_refresh.png ) !important;
+}
+.icon-lock_open {
+    background-image: url( ../icons/lock_open.png ) !important;
+}
+.icon-lock_edit {
+    background-image: url( ../icons/lock_edit.png ) !important;
+}
+.icon-application_cascade {
+    background-image: url( ../icons/application_cascade.png ) !important;
+}
+.icon-page_excel {
+    background-image: url( ../icons/page_excel.png ) !important;
+}
+.icon-page_delete {
+    background-image: url( ../icons/page_delete.png ) !important;
+}
+.icon-page_go {
+    background-image: url( ../icons/page_go.png ) !important;
+}
+.icon-page_red {
+    background-image: url( ../icons/page_red.png ) !important;
+}
+.icon-page_refresh {
+    background-image: url( ../icons/page_refresh.png ) !important;
+}
+.icon-page_gear {
+    background-image: url( ../icons/page_gear.png ) !important;
+}
+.icon-status_online {
+    background-image: url( ../icons/status_online.png ) !important;
+}
+.x-grid3-cell-inner{
+	white-space:normal;
+	overflow:visible;
+}
+.x-selectable, .x-selectable * {
+    user-select: text! important;
+    -o-user-select: text! important;
+    -moz-user-select: text! important;
+    -khtml-user-select: text! important;
+    -webkit-user-select: text! important;
+}
+.x-check-group-alt {
+    background: #D1DDEF;
+    border-top:1px dotted #B5B8C8;
+    border-bottom:1px dotted #B5B8C8;
+}
+/* fieldsets */
+.xx-fieldset {
+    border:0px solid;
+    padding:0px;
+    margin-bottom:0px;
+    display:block; /* preserve margins in IE */
+}
+
+/* fieldsets */
+.xx-box {
+    border:1px solid #B5B8C8;width:auto!important;
+}
+.xx-html-editor-tb {
+    height:0px;
+}

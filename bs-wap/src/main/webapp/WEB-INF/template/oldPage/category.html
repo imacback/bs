@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<head>
+    <title>分类</title>
+    <% include("/share/meta.html"){} %>
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}" />
+</head>
+</head>
+<body>
+<div class="category">
+    <% for(o in categoryList) { %>
+    <section>
+        <nav class="u-5 clear">
+            <span class="bg_line"></span>
+            <span class="fg_title font_size_medium">${o.name}</span>
+        </nav>
+        <div class="u-5-list clear">
+            <% for(sub in o.children) { %>
+            <a href="/category/books.do?id=${sub.id}&name=${sub.name}" class="u-5-item">
+                <div>
+                    <img data-src="${sub.logo}" src="${RES_PATH}/images/icon_loading_category.png"/>
+                    <div class="u-5-item-info">
+                        <h3>${sub.name}</h3>
+                        <p>${sub.recommend}</p>
+                    </div>
+                </div>
+            </a>
+            #end
+        </div>
+    </section>
+    #end
+</div>
+<script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+<script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+</body>
+</html>

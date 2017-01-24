@@ -1,0 +1,23 @@
+#define(ComponentBaseVo comp)
+#set(
+    compPrefStr = pref(prefStr,'cp',comp.id)
+)
+<section>
+    <nav class="u-5 clear">
+        <span class="bg_line"></span>
+        <span class="fg_title font_size_medium">${comp.name}</span>
+    </nav>
+    <div class="u-5-list clear">
+        #for(DataBaseVo data:comp.list)
+            <a href="${compPrefStr + data.url}" class="u-5-item">
+                <div>
+                    <img data-src="${data.logo}" src="${RES_PATH}/images/icon_loading_category.png"/>
+                    <div class="u-5-item-info">
+                        <h3>${data.name}</h3>
+                        <p>${data.desc}</p>
+                    </div>
+                </div>
+            </a>
+        #end
+    </div>
+</section>

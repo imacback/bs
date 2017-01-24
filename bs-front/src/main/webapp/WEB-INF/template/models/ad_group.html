@@ -1,0 +1,17 @@
+##轮播广告
+#define(ComponentBaseVo comp)
+<section class="top_">
+    <div class="slider_container">
+        <div class="octopusui-container" data-octopusui-slider-notauto="true" data-octopusui-slider-notitle="true" data-octopusui-type="slider" data-octopusui-slider-loop="true" data-octopusui-slider-nobutton="true">
+            #for(DataBaseVo data:comp.list)
+            <a href="${data.url}">
+                #if(for.index==1)
+                <img src="${data.logo}" data-src="${data.logo}" data-octopusui-slider-title="" data-octopusui-slider-url="${data.url}" />
+                #else
+                <img data-src="${data.logo}" data-octopusui-slider-title="" data-octopusui-slider-url="${data.url}" />
+                #end
+            </a>
+            #end
+        </div>
+    </div>
+</section>

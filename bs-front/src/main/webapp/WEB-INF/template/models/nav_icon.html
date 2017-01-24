@@ -1,0 +1,24 @@
+##图标导航
+#define(NavVo comp)
+#set(
+    compPrefStr = pref(prefStr,'cp',comp.id)
+)
+<section class="nav_">
+    <div class="padding_all clear">
+        #for(DataBaseVo data:comp.group[0].list)
+            <a href="${compPrefStr + data.url}">
+                <img src="${data.logo}"/>
+                <p>${data.name}</p>
+            </a>
+        #end
+    </div>
+    #if(comp.group.size()>1)
+        <div class="gap_line"><!-- gap_line --></div>
+        #for(DataBaseVo data:comp.group[1].list)
+            <a class="notice padding_all" href="${compPrefStr + data.url}">
+                <img src="${RES_PATH}/images/icon_notice.png" alt="" />
+                <span>${data.name}</span>
+            </a>
+        #end
+    #end
+</section>

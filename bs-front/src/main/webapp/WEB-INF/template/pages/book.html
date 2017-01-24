@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #define(BookVo book)
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION,'bk',book.id)
+    )
+    <title>书籍详情</title>
+    #include("../tools/meta.html")
+    <script>
+        var $_book = {
+            bookId: "${book.id}",
+            title: "${book.name}",
+            cover: "${book.largePic}",
+            author: "${book.author}",
+            chapterId: -1,
+            state: '${book.isSerial}',
+            maxpartnum: '${book.publishChapters}',
+            word:'${book.words}',
+            staturl: "${prefStr + '/ft/book/read.do?id=' + book.id}",
+            showTab: "${prefStr + '/ft/book/detail.do?id=' + book.id}&showTab=2"
+        };
+    </script>
+    <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+</head>
+<body>
+<div class="detail">
+    <section class="book-info">
+        <article class="clear">
+            <img data-src="${book.largePic}" src="${RES_PATH}/images/book_default.jpg"/>
+            <aside class="clear">
+                <h1>${book.name}
+                    #if(book.isSerial!=1) <span class="tag0">完结</span> #else <span class="tag2">连载</span> #end
+                    #if(book.isFee==0) <span class="tag1">免费</span> #end
+                </h1>
+                <div class="meta-info">
+                    <p>
+                        作者:<span>${book.author}</span>
+                    </p>
+                    <p>
+                        类型:<span>${book.categoryName}</span>
+                    </p>
+                    <p>
+                        字数:<span>${book.words>9999?book.words/10000+'万':book.words}字</span>
+                    </p>
+                </div>
+            </aside>
+        </article>
+    </section>
+    <section class="btn-list clear">
+        <div class="btn-list-inner">
+            <a href="#" id="readBook" data-book-id="${book.id}">开始阅读</a>
+            <a href="#" id="bookList" data-book-id="${book.id}">查看目录</a>
+            <a href="#" id="addFav" data-book-id="${book.id}"><em></em></a>
+        </div>
+    </section>
+    #set(tabClz1 = 1==showTab?"hover":"")
+    #set(tabClz2 = 2==showTab?"hover":"")
+    #set(tabDisplay1 = 1==showTab?"":"display:none;")
+    #set(tabDisplay2 = 2==showTab?"":"display:none;")
+    <section class="desc_">
+        <div class="tabs clear">
+            <a href="" class="${tabClz1}" data-index="0"><span>简介</span></a>
+            <a href="" class="${tabClz2}" data-index="1"><span>评论</span></a>
+        </div>
+        <div class="tab-content">
+            <div class="tab-item clear" style="${tabDisplay1}">
+                <article class="wrapper">
+                    ${book.tinyMemo}
+                </article>
+                #if(book.isSerial==1)
+                    <article id="desc" class="more_detail"><span></span></article>
+                    <article class="meta">
+                        <p>
+                            最新章节：<span id="readBookNewChapter" data-book-id="${book.id}" data-chapter-id="${book.publishChapters}">${book.updateChapter}</span>
+                        </p>
+                        <p>
+                            最近更新：${book.updateChapterDate.format("yyyy.MM.dd HH:mm")}
+                        </p>
+                    </article>
+                #end
+            </div>
+            <div class="tab-item clear" style="${tabDisplay2}" >
+                #if(len(book.comments)>0)
+                    <!-- begin 有评论 -->
+                    #for(CommentBaseDto cmt:book.comments)
+                        <div class="comment-item">
+                            #if(cmt.userSex==1)
+                                <img  class="user-avatar" src="${RES_PATH}/images/avatar_boy.png" alt="" />
+                            #elseif(cmt.userSex==2)
+                                <img  class="user-avatar" src="${RES_PATH}/images/avatar_girl.png" alt="" />
+                            #else
+                                <img  class="user-avatar" src="${RES_PATH}/images/avatar_secret.png" alt="" />
+                            #end
+                            <div class="comment-info">
+                                <p class="comment-user-name">
+                                    ##${@StringUtils.hasText(cmt.user.nickName)?cmt.user.nickName:cmt.user.userName}
+                                    ${cmt.userName}
+                                    <span class="comment-time">${cmt.timeStr}</span>
+                                </p>
+                                <p class="comment-msg">
+                                    #if(cmt.isTop) <span class="tag2">置顶</span> #end
+                                    ${cmt.content}
+                                </p>
+                            </div>
+                        </div>
+                    #end
+                    <div class="comment-links clear">
+                        <a href="" id="btnComment" data-book-id="${book.id}" ><span>发表评论</span></a>
+                        <a href="" id="commentList" data-book-id="${book.id}" ><span>全部评论</span></a>
+                    </div>
+                    <!-- end 有评论 -->
+                #else
+                    <!-- begin 没有评论 -->
+                    <div class="no-comment">
+                        <p>还没有评论，赶紧来抢沙发吧！</p>
+                        <a href="" id="btnComment" data-book-id="${book.id}" >发表评论</a>
+                    </div>
+                    <!-- end 没有评论 -->
+                #end
+            </div>
+        </div>
+    </section>
+    #if(len(tagList)>0)
+        <section>
+            <nav class="u-1 u-1-6 font_size_medium"><span>书籍标签</span></a></nav>
+            <div class="u-7 clear">
+                #for(TagBase tag:tagList)
+                    <a href="${prefStr}/ft/tag/list.do?id=${tag.id}&name=${tag.name}" class="font_size_small"><span>${tag.name}</span></a>
+                #end
+            </div>
+        </section>
+    #end
+    #if(len(rcmdList)>0)
+        <section class="u-8">
+            <nav class="u-1 u-1-6 font_size_medium">
+                <span>猜你喜欢</span>
+            </nav>
+            <div class="u-2-wrapper">
+                <article class="u-2 clear">
+                    #for(BookVo bv:rcmdList)
+                    <article>
+                        <a href="${prefStr}/ft/book/detail.do?id=${bv.id}">
+                            <img data-src="${bv.largePic}" src="${RES_PATH}/images/book_default.jpg">
+                            <p>${bv.name}</p>
+                        </a>
+                    </article>
+                    #end
+                </article>
+            </div>
+        </section>
+    #end
+
+    <p class="copyright">
+        由${book.providerName}提供
+    </p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <bean id="jsonConverter" class="com.duoqu.commons.web.spring.FastJsonHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+        <!--<property name="filter">-->
+            <!--<bean class=" com.duoqu.rs.api.util.StringValueFilter"/>-->
+        <!--</property>-->
+        <property name="features">
+            <list>
+                <value>WriteNullStringAsEmpty</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="xmlConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+        <constructor-arg ref="jaxbMarshaller" />
+        <property name="supportedMediaTypes" value="application/xml"/>
+    </bean>
+    <bean id="jaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="packagesToScan">
+            <list>
+                <value>com.duoqu.rs.api.pojo</value>
+            </list>
+        </property>
+    </bean>
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!--<ref bean="jsonConverter"></ref>-->
+            <ref bean="xmlConverter"></ref>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/*.do" />
+            <ref bean="validInterceptor" ></ref>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <bean id="validInterceptor" class="com.duoqu.rs.api.interceptor.ValidInterceptor"/>
+
+</beans>

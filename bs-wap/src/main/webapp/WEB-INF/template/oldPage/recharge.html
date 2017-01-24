@@ -1,0 +1,255 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="/img/psread.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/read.css" media="all">
+    <script src="/js/hm.js"></script><script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript">
+        function payCharge(money,fenbi,pay){
+            //var money;
+            //var fenbi;
+            var payId	=	'pay_'+pay;
+            var	nowId	=	$('#nowId').val();
+            var nowPay	=	'pay_'+nowId;
+            if(money){
+                $('#paymoney').val(money);
+                $('#cpaymoney').val(money);
+                $('#mpaymoney').val(money);
+                $('#fenbi').html(fenbi);
+                $('#cfenbi').html(fenbi);
+                $('#mfenbi').html(fenbi);
+                $('#'+nowPay).removeClass('pay-span-c');
+                $('#'+payId).addClass('pay-span-c');
+                $('#nowId').val(pay);
+            }
+        }
+
+        function payMoney(){
+            var money	=	$('#paymoney').val();
+            var cmoney	=	$('#cpaymoney').val();
+            var fenbi;
+            if(money<20){
+                $('#paymoney').value('20');
+                $('#fenbi').html('2000');
+            }else if(money==30){
+                $('#fenbi').html('3500');
+            }else if(money==50){
+                $('#fenbi').html('6000');
+            }else if(money==100){
+                $('#fenbi').html('12000');
+            }else if(money==200){
+                $('#fenbi').html('25000');
+            }else if(money==1000){
+                $('#fenbi').html('130000');
+            }else{
+                $('#fenbi').html(money*100);
+            }
+        }
+        function cpayMoney(){
+            var cmoney	=	$('#cpaymoney').val();
+            var fenbi;
+            if(cmoney<20){
+                $('#cpaymoney').val('20');
+                $('#cfenbi').html('2000');
+            }else if(cmoney==30){
+                $('#cfenbi').html('3500');
+            }else if(cmoney==50){
+                $('#cfenbi').html('6000');
+            }else if(cmoney==100){
+                $('#cfenbi').html('12000');
+            }else if(cmoney==200){
+                $('#cfenbi').html('25000');
+            }else if(cmoney==1000){
+                $('#cfenbi').html('130000');
+            }else{
+                $('#cfenbi').html(cmoney*100);
+            }
+        }
+        function wpayMoney(){
+            var wmoney	=	$('#wpaymoney').val();
+            if(wmoney<20){
+                $('#wpaymoney').val('20');
+                $('#wfenbi').html(20*95);
+            }else{
+                $('#wfenbi').html(wmoney*95);
+            }
+        }
+        function changeChannel(id){
+            if(id){
+                var channel		=	'channel_'+id;
+                var channelInfo	=	'channelInfo_'+id;
+                var nowPay		=	$('#nowPay').val();
+                if(!nowPay){
+                    var	nowPay	=	1;
+                }
+                var nowchannel		=	'channel_'+nowPay;
+                var nowchannelInfo	=	'channelInfo_'+nowPay;
+
+                $('#'+nowchannel).removeClass('tdon');
+                $('#'+channel).addClass('tdon');
+                $('#'+nowchannelInfo).css('display','none');
+                $('#'+channelInfo).css('display','block');
+                $('#nowPay').val(id);
+            }
+        }
+        function clearNow(){
+            $('#nowPay').val('');
+            $('#nowCard').val('');
+        }
+        window.onload = clearNow;
+        $(document).ready(function(){
+            $('#cardMoney').change(function(){
+                var cardMoney	=	$(this).children('option:selected').val();
+                $.ajax({
+                    url:	'/index.php/Newpay/cardMoney',
+                    type:	'POST',
+                    dataType: 'json',
+                    data:	'cardType='+cardMoney,
+                    error: function(json){
+                        alert('数据错误，请刷新重试！');
+                    },
+                    success: function(json){
+                        if(json.result=='success'){
+                            $('#cardFenbi').html(json.coin);
+                        }
+                    }
+                });
+            })
+        });
+        function cardCharge(id){
+            if(id){
+                var card		=	'card_'+id;
+                var nowCardId		=	$('#nowCard').val();
+                if(!nowCardId){
+                    var	nowCardId	=	1;
+                }
+                var nowCard		=	'card_'+nowCardId;
+                $.ajax({
+                    url:	'/index.php/Newpay/cardInfo',
+                    type:	'POST',
+                    dataType: 'json',
+                    data:	'id='+id,
+                    error: function(json){
+                        alert('数据错误，请刷新重试！');
+                    },
+                    success: function(json){
+                        if(json.result=='success'){
+                            $('#'+nowCard).removeClass('tdon');
+                            $('#'+card).addClass('tdon');
+                            $('#nowCard').val(id);
+                            $('#cardMoney').html(json.seleted);
+                            $('#cardFenbi').html(json.coin);
+                        }
+                    }
+                });
+            }
+        }
+        function cardPay(){
+            var cardCode	=	$('#cardMoney').children('option:selected').val();
+            var cardNum		=	$('#cardNum').val();
+            var cardPwd	=	$('#cardPwd').val();
+            if(!cardNum || !cardPwd){
+                alert('卡号和密码不可为空！');
+            }else if(!cardMoney){
+                alert('参数错误，请刷新页面重试！');
+            }else{
+                $.ajax({
+                    url:	'/index.php/Newpay/cardPay',
+                    type:	'POST',
+                    dataType: 'json',
+                    data:	'cardCode='+cardCode+'&cardNum='+cardNum+'&cardPwd='+cardPwd,
+                    error: function(json){
+
+                    },
+                    success:function(json){
+                        if(json.result=='success'){
+                            alert('订单提交成功！');
+                            location.reload();
+                        }else if(json.result=='failure'){
+                            alert(json.errmsg);
+                        }else{
+                            alert('充值失败！');
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4b2fa8f3ee227d277d7aa654f64a504a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    <title>账务中心_粉色书城</title>
+</head>
+<body class="topup pagebackground">
+<% include("/share/top.html", {login:"1"}){} %>
+<div class="container">
+    <div class="top-alert">
+    </div>
+    <div class="page-title">您的余额：<span class="count" style="color:#ff69b4"><% if (isEmpty(user.virtualCorn)) { %>0<% } else { %>${user.virtualCorn}<% } %></span> 盘丝豆</div>
+    <div class="mod block">
+        <table class="hd" style="width:100%;">
+            <input id="nowPay" value="" type="hidden">
+            <tbody>
+            <tr style="height:35px">
+                <td class="td1 tdon" id="channel_1" onclick="changeChannel(1)" align="center">支付宝</td>
+                <td class="td2" id="channel_5" align="center">&nbsp;</td>
+                <td class="td3" id="channel_2" align="center">&nbsp;</td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="channelInfo_1">
+            <div style="padding:5px;10px; background:#f2dede;">
+                <p style="font-size:14px; color:#a94442;">
+                    提示:<br>
+                    1、1元=100盘丝豆，最低充值20元！<br>
+
+                    2、钜惠来袭！书城对支付宝充值用户举办送钱回馈活动，充30元（送5元）、充50元（送10元）、充100元（送20元）、充200元（送50元）、充
+                    1000元（送300元），充值成功后赠送的钱，会自动转换为相应数量的盘丝豆。<br>
+                    3、书城建议您在充值过程中不要关闭网页，每个步骤都按相应提示操作，系统会自动跳动回您最后阅读的章节。
+                    <br>
+                    4、如盘丝豆未及时到账，超过十分钟以后，请您联系书城下方提供的客服。
+                    <br>
+                </p>
+            </div>
+            <div class="bd">
+                <form action="/recharge/submit.do" method="post" id="form1">
+                    <span onclick="payCharge(30,3500,1)" id="pay_1" class="pay-span pay-span-h">30元</span><span onclick="payCharge(50,6000,2)" id="pay_2" class="pay-span pay-span-h">50元</span><span onclick="payCharge(100,12000,3)" id="pay_3" class="pay-span pay-span-h">100元</span><span onclick="payCharge(200,25000,4)" id="pay_4" class="pay-span pay-span-h">200元</span><span onclick="payCharge(1000,130000,5)" id="pay_5" class="pay-span">1000元</span>&nbsp;<p style="color:#3C763D;">可获得<span id="fenbi">3500</span>盘丝豆</p><table class="single-line-form">
+                    <tbody><tr>
+                        <input id="nowId" value="" type="hidden">
+                    </tr>
+                    <tr height="5px;"></tr>
+                    <tr></tr>
+                    <tr>
+                        <td><input id="paymoney" name="paymoney" class="text-border" placeholder="最低充值20元" value="30" onblur="payMoney()" type="text"></td>
+                        <td style=" padding-left:9px;"><input style="height:30px;font-size:14px;" class="btn btn-auto less-normal btn-blue" value="立即充值" type="submit"></td>
+                    </tr>
+                    </tbody></table>
+                </form>
+            </div>
+        </div>
+        <div class="mod other-link">
+            <div class="bd">
+                <a href="/pay/list.do" class="button">交易记录查询</a>
+                <span class="divide">|</span>
+                <a href="/recharge/list.do" class="button">充值订单查询</a>
+            </div>
+        </div>
+    </div>
+</div>
+<% include("/share/footer.html"){} %>
+</body></html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    #if(isSuccess==1)
+        <title>充值成功</title>
+    #else
+        <title>充值失败</title>
+    #end
+    #include("../tools/meta.html")
+
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+    <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+
+</head>
+#define(User user)
+#set(
+    prefStr = pref(webroot(),SERVER_VERSION)
+)
+<body class="body_result">
+<div class="recharge_result">
+    <div class="result-header">
+        #if(isSuccess==0)
+        <div class="result-info">
+            <img src="${RES_PATH}/images/recharge_error.png" alt="" /> 很抱歉本次充值失败！
+        </div>
+        <div class="result-desc">
+            请点击“继续充值”，再尝试一遍，有任何疑问请致电 多趣客服 <span class="orange">010-56077197</span>
+        </div>
+        <div class="current_account">
+            <span>当前余额：</span>${user.realBalance}${PRODUCT_NAME}
+        </div>
+        #end
+        #if(isSuccess==1)
+        <div class="result-info">
+            <img src="${RES_PATH}/images/recharge_success.png" alt="" /> 您已成功提交充值申请！
+        </div>
+        <div class="result-desc">
+            ${PRODUCT_NAME}会在1-5分钟内到账，在充值记录中可以查询
+        </div>
+        <div class="current_account">
+            <span>当前余额：</span>${user.realBalance}${PRODUCT_NAME}
+        </div>
+        #end
+    </div>
+
+    <div class="order">
+        <div class="result_buttons clear">
+            <a href="${prefStr}/ft/recharge/rechargeType.do?uid=${user.id}&platformId=${platformId}&version=${version}&ditchId=${ditchId}" class="btn_green btn_orange" id="btnGoOnRecharge">继续充值</a>
+            <a href="" class="btn_green btn_gray" id="btnFinishRecharge">结束充值</a>
+        </div>
+
+        <div class="intro" id="intro">
+            <div class="intro-inner">
+                <h3>温馨提示</h3>
+                <p>1.${PRODUCT_NAME}是用来在多趣悦读消费的虚拟货币,仅限在多趣悦读使用</p>
+                <p>2.充值成功后若您的账户长时间未增加相应金额,请致电多趣客服<span class="orange">010-56077197</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

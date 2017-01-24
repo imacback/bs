@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>充值</title>
+        #include("../tools/meta.html")
+
+        <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+        <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+        <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+    </head>
+
+    #define(User user)
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION)
+    )
+
+    <body class="body_recharge_type">
+        <div class="recharge-type">
+            <div class="order_header">
+                #if(null!=user)
+                    <div class="username"><span>您要充值的账号：</span>${@StringUtils.hasText(user.nickName)?user.nickName:user.userName}</div>
+                    <div class="account"><span>当前账户的余额：</span>${user.realBalance}${PRODUCT_NAME}</div>
+                #else
+                    <div class="username"><span>您要充值的账号：</span></div>
+                    <div class="account"><span>当前账户的余额：</span></div>
+                #end
+            </div>
+            <div class="order">
+                <div class="pay_type">
+                    <h2>请选择充值方式</h2>
+                    #if(len(rechargeTypeVoList)>0)
+                        <div class="recharge_type_list clear" id="recharge_type_list">
+                            #for(PayBaseDto rechargeTypeVo : rechargeTypeVoList)
+                                <!-- 当前版本不处理二级支付方式 -->
+                                #if(rechargeTypeVo.parentPaySwitch.isLeaf==1)
+                                    <!-- <p><a href="${prefStr}/ft/recharge/rechargeMoney.do?parentRechargeTypeId=${rechargeTypeVo.parentPaySwitch.id}&platformId=${platformId}&version=${version}&ditchId=${ditchId}" class="btn_gray_light">${rechargeTypeVo.parentPaySwitch.name}</a></p>  -->
+                                    <p><a href="${prefStr}/ft/recharge/rechargeMoney.do?parentRechargeTypeId=${rechargeTypeVo.parentPaySwitch.id}" class="btn_gray_light">${rechargeTypeVo.parentPaySwitch.name}</a></p>
+                                #end
+                            #end
+                        </div>
+                    #end
+                </div>
+
+                <div class="intro" id="intro">
+                    <div class="intro-inner">
+                        <h3>温馨提示</h3>
+                        <p>1.${PRODUCT_NAME}是用来在多趣悦读消费的虚拟货币,仅限在多趣悦读使用</p>
+                        <p>2.充值成功后若您的账户长时间未增加相应金额,请致电多趣客服<span class="orange">010-56077197</span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

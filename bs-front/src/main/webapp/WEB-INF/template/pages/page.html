@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+#define(PageBaseVo page)
+    <head>
+        <title>${page.name}</title>
+        #include("../tools/meta.html")
+        <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+        #set(
+            prefStr = pref(webroot(),SERVER_VERSION,'pg',page.id)
+        )
+        <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+        <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+        <script src="${RES_PATH}/js/index${RES_PARAM}.js${RES_VERSION}"></script>
+    </head>
+    <body>
+        <div class="home">
+            #for(ComponentBaseVo comp : page.compList)
+                #set(path = comp.template)
+                #include(path,{"comp" : comp,"prefStr" : prefStr})
+            #end
+        </div>
+    </body>
+</html>

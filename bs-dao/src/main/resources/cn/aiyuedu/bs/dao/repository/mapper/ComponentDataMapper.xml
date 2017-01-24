@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.ComponentDataDao">
+
+    <insert id="insert" parameterType="componentData">
+        insert into t_component_data(
+                component_id,
+                group_id,
+                data_type,
+                data,
+                logo,
+                title,
+                memo,
+                order_id
+        ) values (
+                #{componentId},
+                #{groupId},
+                #{dataType},
+                #{data},
+                #{logo},
+                #{title},
+                #{memo},
+                #{orderId}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_component_data
+        ]]>
+        <where>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="get" parameterType="int" resultType="componentData">
+        <![CDATA[
+
+			select
+                    id,
+                    component_id componentId,
+                    group_id groupId,
+                    data_type dataType,
+                    data,
+                    logo,
+                    title,
+                    memo,
+                    order_id orderId
+			from t_component_data where id=#{id}
+
+        ]]>
+    </select>
+
+    <update id="update" parameterType="componentData">
+        update t_component_data
+        <set>
+
+            <if test="componentId != null">
+                component_id = #{componentId},
+            </if>
+
+            <if test="groupId != null">
+                group_id = #{groupId},
+            </if>
+
+            <if test="dataType != null">
+                data_type = #{dataType},
+            </if>
+
+            <if test="data != null">
+                data = #{data},
+            </if>
+
+            <if test="logo != null">
+                logo = #{logo},
+            </if>
+
+            <if test="title != null">
+                title = #{title},
+            </if>
+
+            <if test="memo != null">
+                memo = #{memo},
+            </if>
+
+            <if test="orderId != null">
+                order_id = #{orderId}
+            </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_component_data
+        ]]>
+        <where>
+            <if test="componentId != null">
+                component_id = #{componentId}
+            </if>
+            <if test="groupId != null">
+                and group_id = #{groupId}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    id = #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="componentDataBase">
+        <![CDATA[
+    			select
+                         id,
+                         component_id componentId,
+                         group_id groupId,
+                         data_type dataType,
+                         data,
+                         logo,
+                         title,
+                         memo,
+                         order_id orderId
+    			from t_component_data
+    		]]>
+        <where>
+            <if test="componentId != null">
+                component_id = #{componentId}
+            </if>
+            <if test="groupId != null">
+                and group_id = #{groupId}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                       id = #{id}
+                   ]]>
+            </if>
+        </where>
+        <![CDATA[
+    			order by order_id asc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+
+    <select id="getComponentDataDtos" parameterType="map" resultType="componentDataDto">
+        <![CDATA[
+    			select
+                         id,
+                         component_id componentId,
+                         group_id groupId,
+                         data_type dataType,
+                         data,
+                         logo,
+                         title,
+                         memo memo,
+                         order_id orderId
+    			from t_component_data
+    		]]>
+        <where>
+            <if test="componentId != null">
+                component_id = #{componentId}
+            </if>
+            <if test="groupId != null">
+                and group_id = #{groupId}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                       id = #{id}
+                   ]]>
+            </if>
+        </where>
+        <![CDATA[
+    			order by order_id asc
+    		]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+                delete from t_component_data where id in
+            ]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findByOrderId" parameterType="map" resultType="componentDataBase">
+        <![CDATA[
+    			select
+                         id,
+                         component_id componentId,
+                         group_id groupId,
+                         data_type dataType,
+                         data,
+                         logo,
+                         title,
+                         memo,
+                         order_id orderId
+    			from t_component_data
+    			where component_id = #{componentId} and order_id = #{orderId}
+    		]]>
+    </select>
+
+    <!--用于从Mysql至mongodb的数据迁移-->
+    <select id="findAll" resultType="componentData">
+        <![CDATA[
+    			select
+                         id,
+                         component_id componentId,
+                         group_id groupId,
+                         data_type dataType,
+                         data,
+                         logo,
+                         title,
+                         memo memo,
+                         order_id orderId
+    			from t_component_data
+    			order by id asc
+    		]]>
+    </select>
+</mapper>

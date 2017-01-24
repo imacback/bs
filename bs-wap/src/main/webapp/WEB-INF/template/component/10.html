@@ -1,0 +1,15 @@
+<section>
+    <nav class="u-1 u-1-4 font_size_medium" style="border-bottom-color: rgba(${component.fontColor},0.3)">
+        <img src="${component.icon}" alt=""/> <span style="color:rgba(${component.fontColor}',1)">${component.title}</span>
+        <% if (has(component.url) && component.url != '') { %>
+        <a class="more" href="${component.url}">${component.entryName}
+            <img src="${RES_PATH}/images/icon-arrow.png" alt="" />
+        </a>
+        <% } %>
+    </nav>
+    <div class="u-7 clear">
+        <% for(o in component.data) { %>
+            <a href="${componentTarget(o.dataType, o.data)}" class="font_size_small"><span>${o.title}</span></a>
+        <% } %>
+    </div>
+</section>

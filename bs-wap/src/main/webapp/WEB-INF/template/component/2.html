@@ -1,0 +1,21 @@
+<% /* 图标导航 */  %>
+<section class="nav_">
+    <div class="padding_all clear">
+        <% if (component.groups.~size > 0) { %>
+        <% for (o in component.groups[0].list) { %>
+            <a href="${componentTarget(o.dataType, o.data)}">
+                <img src="${o.logo}"/>
+                <p>${o.title}</p>
+            </a>
+        <% } } %>
+    </div>
+    <% if (component.groups.~size > 1) { %>
+        <div class="gap_line"></div>
+        <% for (o in component.groups[1].list) { %>
+            <a class="notice padding_all" href="${componentTarget(o.dataType, o.data)}">
+                <img src="${RES_PATH}/images/icon_notice.png" alt="" />
+                <span>${o.title}</span>
+            </a>
+        <% } %>
+    <% } %>
+</section>

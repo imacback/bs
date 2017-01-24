@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.ClientShelfDao">
+
+
+ <insert id="save" parameterType="cn.aiyuedu.bs.dao.entity.ClientShelf" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO t_client_shelf (
+	bookIds,
+	chapters,
+	platform_id,
+	version,
+	is_use_ditch,
+	ditch_ids,
+	status,
+	create_date,
+	creator_id,
+	edit_date,
+	editor_id
+	)
+	VALUES
+	(
+	#{bookIds},
+	#{chapters},
+	#{platformId},
+	#{version},
+	#{isUseDitch},
+	#{ditchIds},
+	#{status},
+	#{createDate},
+	#{creatorId},
+	#{editDate},
+	#{editorId}
+	)
+ </insert>
+
+   <!-- 获取总数 -->
+    <select id="getCount" parameterType="java.util.Map"  resultType="int">
+        <![CDATA[
+            select count(*) from t_client_shelf
+        ]]>
+        <where>
+          <if test="platformId != null">
+               platform_id = #{platform_id} 
+          </if>
+          <if test="bookIds != null">
+             and  (bookIds like concat('%',#{bookIds},'%'))
+          </if>
+          
+           <if test="ditchIds != null">
+             and  (ditch_ids like concat('%',#{ditchIds},'%'))
+          </if>
+          
+            <if test="createDate != null">
+                and  (create_date like concat(#{createDate},'%'))
+          </if>
+          <if test="version != null">
+               and   (version like concat('%',#{version},'%'))
+          </if>
+           <if test="status != null">
+               and status = #{status} 
+          </if>
+        </where>
+    </select>
+	
+	
+	<select id="get"  parameterType="java.util.Map"  resultType="cn.aiyuedu.bs.common.model.ClientShelfBase">
+	<![CDATA[
+			select id,
+			bookIds,
+			chapters,
+			platform_id platformId,
+			version,
+			is_use_ditch isUseDitch,
+			ditch_ids ditchIds ,
+			status,
+			create_date createDate,
+			creator_id creatorId,
+			edit_date editDate,
+			editor_id editorId
+			from t_client_shelf  
+		]]>
+		<where>
+          <if test="id != null">
+               id=#{id}
+          </if>
+          <if test="status != null">
+            and   status=#{status}
+          </if>
+          </where>
+           ORDER BY edit_date 
+	</select>
+	
+ <!-- 获取全部信息 -->
+    <select id="find" parameterType="java.util.Map"  resultType="clientShelfDto" >
+        <![CDATA[
+			select 
+			id, 
+			bookIds,
+			chapters,
+			platform_id platformId,
+			version,
+			is_use_ditch isUseDitch,
+			ditch_ids ditchIds ,
+			status,
+			create_date createDate,
+			creator_id creatorId,
+			edit_date editDate,
+			editor_id editorId
+			from t_client_shelf 
+		]]>
+		
+	  <where>
+          <if test="platformId != null">
+               platform_id = #{platformId} 
+          </if>
+          <if test="bookIds != null">
+             and  (bookIds like concat('%',#{bookIds},'%'))
+          </if>
+          
+           <if test="ditchIds != null">
+             and  (ditch_ids like concat('%',#{ditchIds},'%'))
+          </if>
+          
+            <if test="createDate != null">
+                and  (create_date like concat(#{createDate},'%'))
+          </if>
+          <if test="version != null">
+               and   (version like concat('%',#{version},'%'))
+          </if>
+           <if test="status != null">
+               and status = #{status} 
+          </if>
+          <if test="id != null">
+            and   id=#{id}
+          </if>
+        </where>
+		  <![CDATA[
+		      ORDER BY id DESC
+		  ]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+ 
+ <!-- 更新数据 -->
+    <update id="update" parameterType="cn.aiyuedu.bs.dao.entity.ClientShelf">
+        update t_client_shelf
+        <set>
+				 <if test="bookIds != null">
+                    bookIds = #{bookIds},
+                 </if>
+
+                 <if test="chapters != null">
+                    chapters = #{chapters},
+                 </if>
+
+                 <if test="platformId != null">
+                    platform_id = #{platformId},
+                 </if>
+                 <if test="version != null">
+                    version = #{version},
+                 </if>
+                 <if test="isUseDitch != null">
+                    is_use_ditch = #{isUseDitch},
+                 </if>
+                  <if test="ditchIds != null">
+                    ditch_ids = #{ditchIds},
+                 </if>
+ 				 <if test="status != null">
+                    status = #{status},
+                 </if>
+                 <if test="editDate != null">
+                    edit_date = #{editDate},
+                 </if>
+                 <if test="editorId != null">
+                    editor_id = #{editorId}
+                 </if>
+        </set>
+        where id=#{id}
+    </update>
+
+     <update id="updateStatus" parameterType="cn.aiyuedu.bs.dao.entity.ClientShelf">
+      update t_client_shelf set status=#{status} ,edit_date = #{editDate}, editor_id = #{editorId}  where id =#{id}
+     </update>
+     <delete id="delete" parameterType="int">
+     	delete from t_client_shelf where id =#{id}
+     </delete>
+     
+     <!-- 获取平台信息 -->
+     <select id="queryPlatformWithIsuser" resultType="java.util.Map">
+     	select id, name from  t_platform where is_use=1
+     </select>
+       <!-- 获取渠道信息 -->
+     <select id="queryDitch" resultType="java.util.Map">
+    	 SELECT id,name from t_ditch
+     </select>
+
+     <select id="queryShelfList" resultType="cn.aiyuedu.bs.common.model.ClientShelfBase">
+         select
+         id,
+         bookIds,
+         chapters,
+         platform_id platformId,
+         version,
+         is_use_ditch isUseDitch,
+         ditch_ids ditchIds ,
+         status,
+         create_date createDate,
+         creator_id creatorId,
+         edit_date editDate,
+         editor_id editorId
+         from t_client_shelf  where status=1
+         <![CDATA[
+    			 order by edit_date DESC, id DESC
+    		]]>
+     </select>
+
+    <select id="findAll" resultType="clientShelf" >
+        select
+        id,
+        bookIds,
+        chapters,
+        platform_id platformId,
+        version,
+        is_use_ditch isUseDitch,
+        ditch_ids ditchIds ,
+        status,
+        create_date createDate,
+        creator_id creatorId,
+        edit_date editDate,
+        editor_id editorId
+        from t_client_shelf
+        <![CDATA[
+			order by id ASC
+		]]>
+    </select>
+
+</mapper>

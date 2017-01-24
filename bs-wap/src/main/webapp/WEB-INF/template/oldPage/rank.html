@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>排行榜</title>
+    #include("../tools/meta.html")
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}" />
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION)
+    )
+</head>
+<body>
+<div class="rank">
+    #for(RankVo r:list)
+        <section>
+            <nav class="u-1 u-1-3 font_size_medium">
+                <span>${r.name}</span> <a class="more" href="${prefStr}/ft/rank/list.do?id=${r.id}&name=${r.name}">查看全部</a>
+            </nav>
+            <div class="u-6 clear">
+                #for(BookVo book:r.list)
+                    #if(for.index%3==1)
+                        <div class="u-6-${for.index/3+1}">
+                    #end
+                        <a href="${prefStr}/ft/book/detail.do?id=${book.id}">
+                            <span class="circle_bg_${for.index-1}">${for.index}</span>
+                            ${book.name}
+                        </a>
+                    #if(for.index%3==0||for.index==for.size)
+                        </div>
+                    #end
+                #end
+            </div>
+        </section>
+    #end
+</div>
+<script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+<script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+</body>
+</html>

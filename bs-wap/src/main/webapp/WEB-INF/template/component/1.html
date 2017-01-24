@@ -1,0 +1,16 @@
+<% /* 轮播广告 */  %>
+<section class="top_">
+    <div class="slider_container">
+        <div class="octopusui-container" data-octopusui-slider-notauto="true" data-octopusui-slider-notitle="true" data-octopusui-type="slider" data-octopusui-slider-loop="true" data-octopusui-slider-nobutton="true">
+            <% for(o in component.data) { %>
+            <a href="${componentTarget(o.dataType, o.data)}">
+                <% if (oLP.index == 1) { %>
+                <img src="/img/mmread.jpg" data-src="/img/mmread.jpg" data-octopusui-slider-title="" data-octopusui-slider-url="${o.data}" />
+                <% } else  {%>
+                <img data-src="${o.logo}" data-octopusui-slider-title="" data-octopusui-slider-url="${o.data}" />
+                <% } %>
+            </a>
+            <% } %>
+        </div>
+    </div>
+</section>

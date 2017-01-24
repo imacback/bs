@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.PushDao">
+
+    <insert id="insert" parameterType="push">
+        insert into t_push(
+                platform_id,
+                target_type,
+                versions,
+                ditch_ids,
+                title,
+                content,
+                url,
+                status,
+                create_date,
+                creator_id,
+                edit_date,
+                 publish_date,
+                editor_id
+        ) values (
+                #{platformId},
+                #{targetType},
+                #{versions},
+                #{ditchIds},
+                #{title},
+                #{content},
+                #{url},
+                #{status},
+                #{createDate},
+                #{creatorId},
+                #{editDate},
+                #{publishDate},
+                #{editorId}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_push
+        ]]>
+        <where>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="get" parameterType="int" resultType="push" >
+        <![CDATA[
+			select
+                    platform_id platformId,
+                    target_type targetType,
+                    versions versions,
+                    ditch_ids ditchIds,
+                    title title,
+                    content content,
+                    url url,
+                    publish_date publishDate,
+                    status status,
+                    create_date createDate,
+                    creator_id creatorId,
+                    edit_date editDate,
+                    editor_id editorId
+			from t_push where id=#{id}
+		]]>
+    </select>
+
+    <update id="update" parameterType="push">
+        update t_push
+        <set>
+
+                 <if test="platformId != null">
+                    platform_id = #{platformId},
+                 </if>
+
+                 <if test="targetType != null">
+                    target_type = #{targetType},
+                 </if>
+
+                 <if test="versions != null">
+                    versions = #{versions},
+                 </if>
+
+                 <if test="ditchIds != null">
+                    ditch_ids = #{ditchIds},
+                 </if>
+
+                 <if test="title != null">
+                    title = #{title},
+                 </if>
+
+                 <if test="content != null">
+                    content = #{content},
+                 </if>
+
+                 <if test="url != null">
+                    url = #{url},
+                 </if>
+
+                 <if test="status != null">
+                    status = #{status},
+                 </if>
+ 
+                 <if test="editDate != null">
+                    edit_date = #{editDate},
+                 </if>
+                <if test="publishDate != null">
+                    publish_date = #{publishDate},
+                </if>
+                <if test="editorId != null">
+                    editor_id = #{editorId}
+                </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+
+        <update id="updatPush"   parameterType="push">
+
+            update t_push
+         <set>
+            <if test="editDate != null">
+                edit_date = #{editDate},
+            </if>
+            <if test="publishDate != null">
+                publish_date = #{publishDate},
+            </if>
+            <if test="editorId != null">
+                editor_id = #{editorId},
+            </if>
+             <if test="status != null">
+                 status = #{status}
+             </if>
+
+        </set>
+    where id=#{id}
+        </update>
+
+
+
+
+     <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_push
+        ]]>
+        <where>
+                <if test="platformId != null">
+                    platform_id = #{platformId} 
+                 </if>
+
+                 <if test="targetType != null">
+                   and target_type = #{targetType} 
+                 </if>
+
+                 <if test="versions != null">
+                     and  (versions like concat('%',#{versions},'%'))
+                 </if>
+
+                 <if test="ditchIds != null">
+                   and  (ditch_ids like concat('%',#{ditchIds},'%'))
+                 </if>
+ 
+                 <if test="status != null">
+                   and status = #{status} 
+                 </if>
+
+                 <if test="createDate != null">
+                     and   SUBSTR(create_date FROM 1 FOR 10) =#{createDate}
+
+                 </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="pushDto" >
+            <![CDATA[
+    			select
+                         id id,
+                         platform_id platformId,
+                         target_type targetType,
+                         versions versions,
+                         ditch_ids ditchIds,
+                         title title,
+                         content content,
+                         publish_date publishDate,
+                         url url,
+                         status status,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_push
+    		]]>
+            <where>
+                <if test="platformId != null">
+                    platform_id = #{platformId} 
+                 </if>
+
+                 <if test="targetType != null">
+                   and target_type = #{targetType} 
+                 </if>
+
+                 <if test="versions != null">
+                     and  (versions like concat('%',#{versions},'%'))
+                 </if>
+
+                 <if test="ditchIds != null">
+                     and  (ditch_ids like concat('%',#{ditchIds},'%'))
+                 </if>
+ 
+                 <if test="status != null">
+                   and status = #{status} 
+                 </if>
+
+                 <if test="createDate != null">
+                     and   SUBSTR(create_date FROM 1 FOR 10) =#{createDate}
+                 </if>
+                <if test="publishDate != null">
+                    and   SUBSTR(publish_date FROM 1 FOR 13) =  #{publishDate}
+                </if>
+        </where>
+            <![CDATA[
+    			order by id desc
+    		]]>
+            <if test="startIndex != null">
+                <![CDATA[
+                    limit #{startIndex},#{pageSize}
+                ]]>
+            </if>
+        </select>
+
+        <delete id="delete" parameterType="list">
+            <![CDATA[
+                delete from t_push where id in
+            ]]>
+            <foreach collection="list" item="id"  open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </delete>
+        <update id="updateStatus" parameterType="push">
+        update t_push
+         <set>
+           		 <if test="status != null">
+                    status = #{status},
+                 </if>
+                 <if test="editDate != null">
+                    edit_date = #{editDate},
+                 </if>
+
+                 <if test="editorId != null">
+                    editor_id = #{editorId}
+                 </if>
+        	</set>
+        	where id=#{id}
+        </update>
+
+        <select id="queryPushInfo" parameterType="map"  resultType="cn.aiyuedu.bs.common.model.PushBase">
+            select
+            id id,
+            platform_id platformId,
+            target_type targetType,
+            versions versions,
+            ditch_ids ditchIds,
+            title title,
+            content content,
+            publish_date publishDate,
+            url url,
+            status status
+            from t_push  where status=1 and  SUBSTR(publish_date FROM 1 FOR 13)<![CDATA[ <= ]]> #{publishDate} order by  publish_date DESC,id DESC
+        </select>
+
+    <!--用于从Mysql至mongodb的数据迁移-->
+    <select id="findAll" resultType="push" >
+        <![CDATA[
+			select
+			    id,
+                platform_id platformId,
+                target_type targetType,
+                versions versions,
+                ditch_ids ditchIds,
+                title title,
+                content content,
+                url url,
+                publish_date publishDate,
+                status status,
+                create_date createDate,
+                creator_id creatorId,
+                edit_date editDate,
+                editor_id editorId
+			from t_push
+			order by id asc
+		]]>
+    </select>
+</mapper>

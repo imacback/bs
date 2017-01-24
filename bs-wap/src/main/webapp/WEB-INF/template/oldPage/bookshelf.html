@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include("/share/header.html"){} %>
+<head>
+    <title>我的书架</title>
+    <% include("/share/meta.html"){} %>
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}css/reader.min.css${RES_VERSION}"/>
+    <script src="${RES_PATH}js/zepto.min.js"></script>
+    <script src="${RES_PATH}js/reader.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}js/index.min.js${RES_VERSION}"></script>
+</head>
+<body>
+<div class="home">
+    <section class="u-8">
+        <nav class="u-1 u-1-6 font_size_medium">
+            <span>书架</span>
+        </nav>
+        <div class="u-2-wrapper">
+            <article class="u-2 clear">
+                <%
+                    if (!isEmpty(bookshelfDtos)) {
+                        var size = bookshelfDtos.~size;
+                        for(o in bookshelfDtos) {
+                %>
+                <article>
+                    <a href="/book/show.do?bid=${o.bookId}">
+                        <img data-src="${o.largePic}" src="${DEFAULT_COVER}">
+                        <p>${o.bookName}</p>
+                    </a>
+                </article>
+                <% } } else { %>
+                <article>您书架上还没有任何书箱</article>
+                <% } %>
+            </article>
+        </div>
+    </section>
+</div>
+</body>
+</html>

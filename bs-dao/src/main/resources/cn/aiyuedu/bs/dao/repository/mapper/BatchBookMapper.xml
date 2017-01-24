@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.BatchBookDao">
+
+    <insert id="insert" parameterType="batchBook" useGeneratedKeys="true" keyProperty="id">
+        insert into t_batch_book(
+        batch_id,
+        cp_book_id,
+        provider_id,
+        book_name,
+        author,
+        create_date,
+        creator_id,
+        edit_date,
+        editor_id
+        ) values (
+        #{batchId},
+        #{cpBookId},
+        #{providerId},
+        #{bookName},
+        #{author},
+        #{createDate},
+        #{creatorId},
+        #{editDate},
+        #{editorId}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_batch_book
+        ]]>
+        <where>
+            <if test="providerId != null">
+                provider_id = #{providerId}
+            </if>
+            <if test="bookName != null">
+                and book_name = #{bookName}
+            </if>
+            <if test="author != null">
+                and author = #{author}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="get" parameterType="long" resultType="batchBook" >
+        <![CDATA[
+			select
+                id id,
+                batch_id batchId,
+                cp_book_id cpBookId,
+                provider_id providerId,
+                book_name bookName,
+                author author,
+                create_date createDate,
+                creator_id creatorId,
+                edit_date editDate,
+                editor_id editorId
+			from t_batch_book where id=#{id}
+		]]>
+    </select>
+
+    <update id="update" parameterType="batchBook">
+        update t_batch_book
+        <set>
+
+            <if test="batchId != null">
+                batch_id = #{batchId},
+            </if>
+
+            <if test="cpBookId != null">
+                cp_book_id = #{cpBookId},
+            </if>
+
+            <if test="providerId != null">
+                provider_id = #{providerId},
+            </if>
+
+            <if test="bookName != null">
+                book_name = #{bookName},
+            </if>
+
+            <if test="author != null">
+                author = #{author},
+            </if>
+
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+
+            <if test="creatorId != null">
+                creator_id = #{creatorId},
+            </if>
+
+            <if test="editDate != null">
+                edit_date = #{editDate},
+            </if>
+
+            <if test="editorId != null">
+                editor_id = #{editorId}
+            </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_batch_book
+        ]]>
+        <where>
+            <if test="batchId != null">
+                batch_id = #{batchId}
+            </if>
+            <if test="cpBookId != null">
+                and cp_book_id = #{cpBookId}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="bookName != null">
+                and (book_name like concat('%',#{bookName},'%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="batchBook" >
+        <![CDATA[
+    			select
+                         id,
+                         batch_id batchId,
+                         cp_book_id cpBookId,
+                         provider_id providerId,
+                         book_name bookName,
+                         author,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_batch_book
+    		]]>
+        <where>
+            <if test="batchId != null">
+                batch_id = #{batchId}
+            </if>
+            <if test="cpBookId != null">
+                and cp_book_id = #{cpBookId}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="bookName != null">
+                and (book_name like concat('%',#{bookName},'%'))
+            </if>
+        </where>
+        <!-- order by id desc -->
+        <![CDATA[
+            order by id asc
+        ]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+
+    <select id="getBatchBookDtos" parameterType="map" resultType="batchBookDto" >
+        <![CDATA[
+    			select
+                         id,
+                         batch_id batchId,
+                         cp_book_id cpBookId,
+                         provider_id providerId,
+                         book_name bookName,
+                         author,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_batch_book
+    		]]>
+        <where>
+            <if test="batchId != null">
+                batch_id = #{batchId}
+            </if>
+            <if test="cpBookId != null">
+                and cp_book_id = #{cpBookId}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="bookName != null">
+                and (book_name like concat('%',#{bookName},'%'))
+            </if>
+        </where>
+        <![CDATA[
+            order by id desc
+        ]]>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+                delete from t_batch_book where id in
+            ]]>
+        <foreach collection="list" item="id"  open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getCpBookIdByCp" parameterType="map" resultType="string">
+        <![CDATA[
+    			select cp_book_id
+    			from t_batch_book where provider_id = #{providerId} and batch_id in
+    		]]>
+        <foreach collection="batchIdList" item="batchId" open="(" separator="," close=")">
+            #{batchId}
+        </foreach>
+    </select>
+</mapper>

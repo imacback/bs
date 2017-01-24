@@ -1,0 +1,82 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="/img/psread.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/read.css" media="all">
+    <script src="/js/hm.js">
+    </script><script type="text/javascript" src="/js/jquery.js"></script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4b2fa8f3ee227d277d7aa654f64a504a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    <title>账务中心_盘丝读</title>
+</head>
+<body class="topup pagebackground">
+<% include("/include/header.html", {user:user}){} %>
+<div class="container">
+    <div class="top-alert">
+    </div>
+<% if (has(errorMessage)){%>
+    <div class="bd" align="center"><span class="count" style="color:#ff69b4">${errorMessage}</span></div>
+<% } %>
+    <div class="page-title">手机验证码</div>
+    <div class="mod block">
+
+        <div id="channelInfo_7">
+            <div style="padding:5px;10px; background:#b8ffca;">
+                <p style="font-size:14px; color:#001a13;">
+                    提示:<br>
+                    1、请输入手机验证码！<br>
+                    <br>
+                </p>
+            </div>
+            <div class="bd">
+                <form action="/recharge/submitVerificationCode.do" method="post" id="form7">
+
+                    <tbody><tr>
+                        <input id="nowId7" value="" type="hidden">
+                    </tr>
+                    <tr height="5px;"></tr>
+                    <tr></tr>
+                    <tr>
+                        <td><input name="payType" type="hidden" value="7"/>
+                            <input  type="hidden" id="mobile" name="mobile" value="${mobile}">
+                            <input type="hidden"  name="orderId" value="${orderId}"/>
+                        </td>
+                        <td  align="right">请输入手机验证码</td><td><input id="verifyCode" name="verifyCode" class="text-border" type="text"/></td>
+                        <td style=" padding-left:9px;"><input style="height:30px;font-size:14px;" class="btn btn-auto less-normal btn-blue" value="确认提交" type="submit"></td>
+                    </tr>
+                    </tbody></table>
+                </form>
+            </div>
+        </div>
+        <div class="mod other-link">
+            <div class="bd">
+                <a href="/pay/entry.do" class="button">选择其他充值方式充值</a>
+                <span class="divide">|</span>
+                <a href="/pay/list.do" class="button">交易记录查询</a>
+                <span class="divide">|</span>
+                <a href="/recharge/list.do" class="button">充值订单查询</a>
+            </div>
+        </div>
+    </div>
+</div>
+<% include("/include/footer.html"){} %>
+<% include("/include/statis.html"){} %>
+</body></html>

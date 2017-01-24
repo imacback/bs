@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="bookGeneralService" class="cn.aiyuedu.bs.service.BookGeneralService"/>
+    <bean id="chapterContentService" class="cn.aiyuedu.bs.service.ChapterContentService"/>
+    <bean id="chapterGeneralContentService" class="cn.aiyuedu.bs.service.ChapterGeneralService"/>
+    <bean id="clientShelfGeneralService" class="cn.aiyuedu.bs.service.ClientShelfGeneralService"/>
+    <bean id="clientTabGeneralService" class="cn.aiyuedu.bs.service.ClientTabGeneralService"/>
+    <bean id="entryGeneralContentService" class="cn.aiyuedu.bs.service.EntryGeneralService"/>
+    <bean id="filterWordGeneralService" class="cn.aiyuedu.bs.service.FilterWordGeneralService" init-method="reload"/>
+    <bean id="tagGeneralService" class="cn.aiyuedu.bs.service.TagGeneralService" init-method="reload"/>
+    <bean id="solrGeneralService" class="cn.aiyuedu.bs.service.SolrGeneralService"/>
+
+</beans>

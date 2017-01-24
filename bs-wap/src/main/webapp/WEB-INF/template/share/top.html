@@ -1,0 +1,31 @@
+<div class="header">
+    <a href="/container/show.do?id=1" class="logo"><img src="/img/logo.png" alt="粉色"></a>
+    <div class="top">
+        <div class="nav">
+            <a href="/container/show.do?id=1" style="">粉色</a>
+            <a href="/container/show.do?id=1" style="">书城</a>
+            <a href="/recharge/entry.do" style="">充值</a>
+        </div>
+    </div>
+    <% if (isEmpty(user.nickname)) { %>
+    <div class="bottom " style="background-color:#fcdee8; box-shadow: 0px 1px 0px #C1BDC4;">
+        <div class="accounts">
+            <% if (login == "1") { %>
+            <a href="/user/login.do">登录</a>
+            <% } else { %>
+            <a href="/user/register.do">注册</a>
+            <% } %>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="bottom logined" style="background-color:#fcdee8; box-shadow: 0px 1px 0px #C1BDC4;">
+        <div style=" float:right; margin-right:10px;">
+            <img src="/img/tou.png" style=" margin-bottom:-5px; margin-right:-10px;">
+            <a href="/user/info.do" class="my-name" style="font-size:12px; font-weight:400;"> ${user.nickname}</a>
+        </div>
+        <div style=" float:left; margin-right:10px;">
+            <a href="/bookshelf/show.do" style="font-size:12px; font-weight:400;">我的书架</a>
+        </div>
+    </div>
+    <% } %>
+</div>

@@ -1,0 +1,102 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="/img/psread.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/read.css" media="all">
+
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/css/bookself.css"/>
+    <script src="${RES_PATH}js/zepto.min.js"></script>
+    <script src="${RES_PATH}js/reader.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}js/index.min.js${RES_VERSION}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#amend').click(function(){
+                $('#nowName').css('display','none');
+                $('#amend').css('display','none');
+                $('#bian').css('display','block');
+
+            });
+            $('#confirms').click(function(){
+                var nickname	=	$('#nickname').val();
+                $.ajax({
+                    url:'/user/updateName.do',
+                    type:'POST',
+                    data:'nickname='+nickname,
+                    error:function(json){
+                        alert('修改失败！');
+                    },
+                    success:function(result){
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+    <title>个人中心_书城</title>
+</head>
+<body class="home pagebackground">
+<% include("/include/header.html", {user:user}){} %>
+<div class="container">
+    <div class="top-alert">
+    </div>
+    <h1 class="page-title">个人中心</h1>
+    <div class="mod block reading" style="padding-bottom:10px;">
+        <div class="bd">
+            <ul class="list">
+                <li><p class="name">头像：<img width="40" class="bd" style="" src="/img/xiao.jpg"/></p></li>
+                <!--上传<input type="file"  />-->
+                <li><p class="name">ID：${user.id}</p></li>
+                <li><p class="name">昵称：
+                        <span id="bian" style="display:none">
+                        <input id="nickname" class="self-top-ipt" value="<% if (isEmpty(user.userName)) { %>${user.uid}<% } else { %>${user.userName}<% } %>" type="text"> <span id="confirms" style=" margin-left:30px; padding:5px; text-align:center; background-color:#ff69b4; height:30px; line-height:30px; color:#ffffff;">确定</span>
+                        </span>
+                    <span id="nowName"><% if (isEmpty(user.nickname)) { %>${user.uid}<% } else { %>${user.nickname}<% } %></span>
+                    <span id="amend" style=" margin-left:30px; padding:5px; text-align:center; background-color:#ff69b4; height:30px; line-height:30px; color:#ffffff;">修改</span>
+                </p>
+                    <% if (has(message)) { %>
+                    <span id="ts" style=" display:none;color:#999">${message}</span>
+                    <% } %>
+                </li>
+                <li><p class="name">余额：<% if (isEmpty(user.virtualCorn)) { %>0<% } else { %>${user.virtualCorn}<% } %>盘丝豆</p></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<%
+                    if (!isEmpty(bookshelfDtos)) {
+                        var size = bookshelfDtos.~size;
+%>
+<div class="home">
+    <section class="u-8">
+        <nav class="u-1 u-1-6 font_size_medium">
+            <span>我的书架</span>
+        </nav>
+        <div class="u-2-wrapper">
+            <article class="u-2 clear">
+                <%
+
+                        for(o in bookshelfDtos) {
+                %>
+                <article>
+                    <a href="/book/show.do?bid=${o.bookId}">
+                        <img data-src="${o.largePic}" src="${DEFAULT_COVER}">
+                        <p>${o.bookName}</p>
+                    </a>
+                </article>
+                <% } %>
+            </article>
+        </div>
+    </section>
+</div><% } %>
+<% include("/include/footer.html"){} %>
+<% include("/include/statis.html"){} %>
+</body></html>

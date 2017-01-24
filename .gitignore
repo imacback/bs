@@ -1,0 +1,57 @@
+*.class
+.DS_Store
+*/.DS_Store
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#Eclipse Files#
+*.pydevproject
+.project
+.metadata
+.mymetadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+META-INF/
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+#Idea Files#
+*.iml
+*.ipr
+*.iws
+.idea/
+
+
+#Maven Files#
+*/target/
+target/
+pom.xml.*
+*/pom.xml.*
+release.properties
+
+rs-back/src/main/webapp/WEB-INF/work/*
+rs-back/src/main/webapp/img/tmp/*
+rs-back/src/main/webapp/tmp
+rs-back/src/main/webapp/WEB-INF/work

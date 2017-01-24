@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>${rankName}</title>
+    #include("../tools/meta.html")
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION,'rk',rankId)
+    )
+</head>
+<body>
+<div class="sub-page">
+    #set(ajaxUrl = ctxpath()+"/ft/rank/listAjax.do?id="+rankId+"&p=")
+    #include("../models/load_more.html",{"ajaxUrl":ajaxUrl,"prefStr":prefStr})
+</div>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

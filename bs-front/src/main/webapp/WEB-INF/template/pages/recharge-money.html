@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>${paySwitchName}</title>
+        #include("../tools/meta.html")
+        <script type="text/javascript">
+            var $_param = {
+                productName: "${PRODUCT_NAME}"
+            };
+        </script>
+        <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+        <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+        <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+    </head>
+
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION)
+    )
+
+    <body class="body_money_select">
+        <div class="order recharge_list recharge_money clear">
+            <h2 class="recharge_title">请选择充值金额</h2>
+            <div class="recharge_price_list clear">
+                #if(len(payConfigList)>0)
+                    #for(PayConfigBase payConfig : payConfigList)
+
+                        #set(hrefValue = null==href?"":prefStr+href+"&payConfigId="+payConfig.id)
+
+                        <!-- data-price是支付配置的ID,data-pay-type是支付的类型:1 360充值,2支付宝充值,3移动短信充值,4联通短信充值,5电信短信充值 -->
+                        <a class="price_list_item" data-price="${payConfig.id}" data-pay-type="${payTypeId}" href="${hrefValue}">
+                            <div>
+                                <span>${payConfig.amount}元</span>
+                                <em>(${payConfig.dqAmount}${PRODUCT_NAME})</em>
+                            </div>
+                        </a>
+                    #end
+                #end
+
+            </div>
+
+            <div class="intro" id="intro">
+                <div class="intro-inner">
+                    ${tips}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

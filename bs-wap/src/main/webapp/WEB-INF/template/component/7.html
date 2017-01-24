@@ -1,0 +1,5 @@
+<% /* Banner广告 */  %>
+<% if (component.data.~size == 1) { %>
+<% for(o in component.data){ %>
+<a href="${componentTarget(o.dataType, o.data)}" class="banner-single"><img data-src="${o.logo}"/></a>
+<% } } %>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>${typeName}</title>
+    #include("../tools/meta.html")
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+    #set(
+        prefStr = pref(webroot(),SERVER_VERSION,'tp',typeId)
+    )
+</head>
+<body>
+<div class="sub-page">
+    #set(ajaxUrl = ctxpath()+"/ft/type/listAjax.do?id="+typeId+"&p=")
+    #include("../models/load_more.html", {"ajaxUrl":ajaxUrl,"prefStr":prefStr})
+</div>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

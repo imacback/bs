@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>${book.name}_目录_爱悦读</title>
+    <% include("/share/include.html"){} %>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/read.css" media="all">
+    <script>
+        function forwardToNo(start,size,isDesc,isNext,pages,maxChaper){
+            var st =  document.getElementById('pageName').value;
+            if(st>=pages){
+                st = pages-1;
+            }else{
+                st = st-1;
+            }
+            if(st<1){
+                st=0
+            }
+            window.location.href="/chapter/catalog.do?bid=${page.bookId}&maxChaper="+maxChaper+"&pageSize=${page.size}&sort="+sort+"&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}&isNext=0&start="+st;
+        }
+    </script>
+</head>
+<body class="body-bg">
+<% include("/include/nav.html"){} %>
+<div class="content">
+    <header class="head">
+        <a class="leftbtn" id="headBtn" href="javascript:history.go(-1)"></a>
+        <label>目录</label>
+    </header>
+    <!-- begin 中间内容部分-->
+    <div id="main">
+        <div class="main-box">
+            <header class="catal-sort clear">
+                <p>共计${page.total}章</p>
+                <div class="sort" id="sort">
+                    <%
+                        var cssString = "hover";
+                        var cssStringNull = "";
+                        if (page.isDesc) {
+                            cssString = "";
+                            cssStringNull = "hover";
+                        }
+                    %>
+                        <span class="${cssString}" data-index="0">
+                            <a href="/chapter/catalog.do?bid=${page.bookId}&start=${page.start}&pageSize=${page.size}&isDesc=false&isNext=0&mark=1&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}">正序</a>
+                        </span>
+                    <em></em>
+                        <span  data-index="1" class="${cssStringNull}">
+                            <a href="/chapter/catalog.do?bid=${page.bookId}&start=${page.start}&pageSize=${page.size}&isDesc=true&isNext=0&mark=1&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}">倒序</a>
+                        </span>
+                </div>
+            </header>
+            <section class="text-box">
+                <ul class="catal-list-2">
+                    <% for(chapter in page.result) { %>
+                    <li style="position:relative;"><a href="/chapter/read.do?bid=${page.bookId}&orderId=${chapter.orderId}&isNext=0&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}">${chapter.name}</a><% if (chapter.isFee == 1) { if (buyMap["c_"+chapter.id] == "1") { %><img style="width: 20px; height: 20px; float: right;position:absolute; right:5px;top:10px;" src="/img/unlock.jpg"><% } else { %><img style="width: 20px; height: 20px; float: right;position:absolute; right:5px;top:10px;" src="/img/lock.jpg"><% } } %></li>
+                    <% } %>
+                </ul>
+            </section>
+            <section>
+                <div class="page clear">
+                    <% if(page.start==0) { %>
+                    <a> <span class="null">上一页</span></a>
+                    <% } else { %>
+                    <a href="/chapter/catalog.do?bid=${page.bookId}&start=${page.start}&pageSize=${page.size}&isDesc=${page.isDesc}&isNext=-1&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}" ><span >上一页</span></a>
+                    <% } %>
+                    <div class="number">${page.start+1}<span>/${page.pages}页</span></div>
+                    <% if(page.pages==1 || page.start+1==page.pages) { %>
+                    <a> <span class="null">下一页</span> </a>
+                    <% } else { %>
+                    <a href="/chapter/catalog.do?bid=${page.bookId}&start=${page.start}&pageSize=${page.size}&isDesc=${page.isDesc}&isNext=1&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}"><span>下一页</span></a>
+                    <% } %>
+                </div>
+                <div class="page-num border-b-e6 clear">
+                    <label>跳转</label>
+                    <input type="text" name="pageName" id="pageName" value="${page.start+1}" />
+                    <a href="#" onclick="forwardToNo(${page.start},${page.size},${page.isDesc},0,${page.pages},${maxChaper})"><span>跳转</span></a>
+                    <% if(page.pages==page.start+1 || page.pages==1) { %>
+                    <a><span class="null">尾页</span></a>
+                    <% } else { %>
+                    <a href="/chapter/catalog.do?bid=${page.bookId}&start=${page.pages-1}&pageSize=${page.size}&isDesc=${page.isDesc}&isNext=0&maxChaper=${maxChaper}&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}"><span>尾页</span></a>
+                    <% } %>
+                </div>
+            </section>
+
+            <footer>
+                <p>&nbsp;<br/>&nbsp;</p>
+            </footer>
+
+        </div>
+    </div>
+    <!-- end 中间内容部分-->
+</div>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

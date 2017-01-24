@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.aiyuedu.bs.dao.repository.ClientTabDao">
+
+   <!-- 获取总数 -->
+    <select id="getTabCount"  parameterType="java.util.Map" resultType="int">
+        <![CDATA[
+            select count(*) from t_client_tab
+            
+        ]]>
+         <where>
+		  	<if test="status !=null">
+		  		status =#{status}
+		  	</if>
+	   </where>
+     
+    </select>
+
+ <!-- 获取全部信息 -->
+    <select id="find" parameterType="java.util.Map"  resultType="cn.aiyuedu.bs.dao.entity.ClientTab" >
+        <![CDATA[
+			select  id,
+					name name,
+                    order_id orderId,
+                    url url,
+                    create_date createDate,
+                    creator_id creatorId,
+                    edit_date editDate,
+                    editor_id editorId,
+                    status status
+			from t_client_tab 
+			
+		]]>
+		  <where>
+		  	<if test="status !=null">
+		  		status =#{status}
+		  	</if>
+		  </where>
+        <if test="order !=null">
+            ORDER BY order_id
+        </if>
+        <if test="startIndex != null">
+            <![CDATA[
+                limit #{startIndex},#{pageSize}
+            ]]>
+        </if>
+    </select>
+    
+     <!-- 获取全部信息 -->
+    <select id="findForApi"   resultType="cn.aiyuedu.bs.common.model.ClientTabBase" >
+        <![CDATA[
+			select  id,
+				    name name,
+                    order_id orderId,
+                    url url
+			from t_client_tab   
+		]]>
+    </select>
+ <!-- 更新数据 -->
+    <update id="update" parameterType="cn.aiyuedu.bs.dao.entity.ClientTab">
+        update t_client_tab
+        <set>
+				 <if test="name != null">
+                    name = #{name},
+                 </if>
+
+                 <if test="orderId != null">
+                    order_id = #{orderId},
+                 </if>
+
+                 <if test="url != null">
+                    url = #{url},
+                 </if>
+                 <if test="editDate != null">
+                    edit_date = #{editDate},
+                 </if>
+                 <if test="editorId != null">
+                    editor_id = #{editorId}
+                 </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+     <update id="updateisActivy" parameterType="java.util.Map">
+      update t_client_tab set status=#{status} where id =#{id}
+     </update>
+
+    <!-- 从mysql到mongodb迁移数据时使用 -->
+    <select id="findAll" resultType="cn.aiyuedu.bs.dao.entity.ClientTab" >
+        <![CDATA[
+			select  id,
+					name name,
+                    order_id orderId,
+                    url url,
+                    create_date createDate,
+                    creator_id creatorId,
+                    edit_date editDate,
+                    editor_id editorId,
+                    status status
+			from t_client_tab
+			order by id asc
+		]]>
+    </select>
+</mapper>

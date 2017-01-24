@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0044)http://m.fensebook.com/index.php/Index/Login -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="http://phone.fensebook.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <title>盘丝读</title>
+    <style>
+        .others {
+            margin-top: 10px;
+            padding-top: 14px!important;
+            border-top: 1px dotted #ccc;
+            font-size: 0.875em;
+            color: #999;
+        }
+        .others a {
+            margin-right: 3px;
+        }
+        .others .divide {
+            border-left: 1px dotted #ccc;
+            margin-right: 10px;
+        }
+    </style>
+    <script src="http://hm.baidu.com/hm.js?4b2fa8f3ee227d277d7aa654f64a504a"></script><script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?4b2fa8f3ee227d277d7aa654f64a504a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    <style type="text/css"></style>
+</head>
+<body class="sign-form pagebackground">
+<div class="header">
+    <% include("/share/top.html"){} %>
+    <div class="bottom " style="background-color:#d1ecc3; box-shadow: 0px 1px 0px #C1BDC4;">
+        <div class="accounts">
+            <a href="/user/register.do">注册</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="top-alert">
+    </div>
+    <div class="mod block form">
+        <div class="hd"><h4>登录</h4></div>
+        <div style=" padding:5px 20px; line-height:30px;">
+            <p>您好！成功登陆即可使用盘丝读的全部功能！</p>
+        </div>
+        <form action="/user/loginSave.do" method="post" class="form-horizontal">
+            <div class="bd">
+                <input type="hidden" name="backUrl" value="http://m.psread.cn/">
+                <div class="item">
+                    <div class="item-label">账　户</div>
+                    <div class="item-control">
+                        <input type="text" maxlength="60" size="28" class="text" name="nickname" value="">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-label">密　码</div>
+                    <div class="item-control">
+                        <input type="password" maxlength="20" size="28" class="text" name="password">
+                    </div>
+                </div>
+                <!--<div class="item">
+                    <label for="keeplogin"><input type="checkbox" id="keeplogin" name="keeplogin" checked/> 记住我</label> <a href="/accounts/forget" class="forget">忘记密码？</a>
+                </div>
+                <div class="item">
+                    <p class="tips">*需支持cookie</p>
+                </div>-->
+            </div>
+            <div class="ft">
+                <input type="submit" value="登录" class="btn btn-auto btn-blue">
+            </div>
+            <div class="ft">
+                <a class="btn btn-auto" href="/user/register.do">还没有账号？点击此注册</a>
+            </div>
+        </form>
+    </div>
+</div>
+<% include("/share/footer.html"){} %>
+</body>
+</html>

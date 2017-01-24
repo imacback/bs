@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>${tagName}</title>
+    <% include("/share/meta.html"){} %>
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+</head>
+<body>
+<div class="sub-page">
+    <% var ajaxUrl = CTX_PATH + "/tag/booksAjax.do?id="+tagId+"&p="; %>
+    <% include("/component/load_more.html", {ajaxUrl:ajaxUrl}){} %>
+</div>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

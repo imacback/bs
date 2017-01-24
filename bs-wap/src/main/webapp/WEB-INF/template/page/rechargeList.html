@@ -1,0 +1,95 @@
+<!--?xml version="1.0" encoding="utf-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="/img/psread.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/read.css" media="all">
+    <script src="/js/hm.js"></script><script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?4b2fa8f3ee227d277d7aa654f64a504a";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <title>充值订单查询_盘丝读</title>
+</head>
+<body class="pagebackground">
+<% include("/include/header.html", {user:user}){} %>
+<div class="container">
+    <div class="top-alert">
+    </div>
+    <h1 class="page-title">充值订单查询</h1>
+    <div class="mod my-pocket">
+        <div class="bd">
+            您的余额：<span class="count">${user.virtualCorn}</span> 盘丝豆
+        </div>
+    </div>
+
+    <div class="mod block record-list">
+        <% if (page.totalPages > 1) { %>
+        <div class="hd">
+            <% if (page.pageNo > 1) { %><a href="/recharge/list.do?pageNo=${page.pageNo-1}">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;<% } %><% if (page.pageNo < page.totalPages) { %><a href="/recharge/list.do?pageNo=${page.pageNo+1}">下一页</a><% } %>
+        </div>
+        <% } %>
+        <div class="bd">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>订单号</th>
+                    <th>渠道</th>
+                    <th>金额</th>
+                    <th>时间</th>
+                    <th>结果</th>
+                </tr>
+                </thead>
+                <% if (page.totalItems > 0) {
+                for (o in page.result) {
+                %>
+                <tbody>
+                <tr>
+                    <td>
+                        <%
+                        if (!isEmpty(o.merTradeCode)) {
+                        var length = strutil.length(o.merTradeCode);
+                        if (length > 16) {
+                        %>
+                        ${strutil.subStringTo(o.merTradeCode,0,16)}<br>${strutil.subString(o.merTradeCode,16)}
+                        <%
+                        } else {
+                        %>
+                        ${o.merTradeCode}
+                        <%
+                        }
+                        } else { %>
+                        &nbsp;
+                        <% } %>
+                    </td>
+                    <td><% if (o.payType == 2) { %>支付宝<% } else if (o.payType == 6) { %>微信<% } else if (o.payType == 7) { %>话费直充<% } else { %>&nbsp;<% } %></td>
+                    <td><span class="count">${o.recAmount}</span></td>
+                    <td>${o.createTime,dateFormat="yyyy.MM.dd HH:mm:ss"}</td>
+                    <td><% if (o.tradeStatus == 6) { %>支付成功<% } else { %>未完成<% } %></td>
+                </tr>
+                </tbody>
+                <% } } else { %>
+                <tbody>
+                <tr>
+                    <td colspan="5">您还没有充值记录</td>
+                </tr>
+                </tbody>
+                <% } %>
+            </table>
+        </div>
+    </div>
+</div>
+<% include("/include/footer.html"){} %>
+<% include("/include/statis.html"){} %>
+</body></html>

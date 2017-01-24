@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>我的账户</title>
+    #include("../tools/meta.html")
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+    <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+</head>
+#define(User user)
+#set(
+    prefStr = pref(webroot(),SERVER_VERSION)
+)
+<body>
+<div class="account">
+    <div class="order_header">
+        <a class="recharge" id="recharge" href="${prefStr}/ft/recharge/rechargeType.do?uid=${user.id}&platformId=${platformId}&version=${version}&ditchId=${ditchId}">立即充值</a>
+        <div class="username"><span>用户名：</span>${@StringUtils.hasText(user.nickName)?user.nickName:user.userName}</div>
+        <div class="account"><span>余　额：</span>${user.realBalance}${PRODUCT_NAME}</div>
+    </div>
+    <div class="order">
+        <div lass="recharge_list">
+            #if(len(rechList)>0)
+            <div class="recharge_list_item">
+                <h2>充值记录</h2>
+                <div class="recharge_list_data">
+                    #for(RechargeBase rech:rechList)
+                    <div class="recharge_list_data_item">
+                        #if(rech.type==1)
+                            <h3>充值${rech.productUnitNum+rech.freeProductUnitNum}${PRODUCT_NAME}</h3>
+                        #else
+                            <h3>签到奖励${rech.freeProductUnitNum}${PRODUCT_NAME}</h3>
+                        #end
+                        <p class="recharge_date">${rech.createTime.format("yyyy-MM-dd HH:mm")}</p>
+                    </div>
+                    #end
+                    #if(len(rechList)>=3)
+                    <div class="recharge_list_data_item">
+                        <a href="${prefStr}/ft/user/rechList.do?id=${user.id}" class="load_more recharge_load_more">更多记录</a>
+                    </div>
+                    #end
+                </div>
+
+            </div>
+            #end
+            #if(len(payChapList)>0)
+            <div class="recharge_list_item">
+                <h2>单章消费</h2>
+                <div class="recharge_list_data">
+                    #for(PayTotalVo pay:payChapList)
+                    <div class="recharge_list_data_item">
+                        <h3>《${pay.bookName}》消费${pay.cost}${PRODUCT_NAME}</h3>
+                        <p class="recharge_date">单章末次购买时间 ${pay.createTime.format("yyyy-MM-dd HH:mm")}</p>
+                    </div>
+                    #end
+                    #if(len(payChapList)>=3)
+                    <div class="recharge_list_data_item">
+                        <a href="${prefStr}/ft/user/payList.do?id=${user.id}" class="load_more recharge_load_more">更多记录</a>
+                    </div>
+                    #end
+                </div>
+            </div>
+            #end
+            #if(len(payBookList)>0)
+            <div class="recharge_list_item">
+                <h2>全本消费</h2>
+                <div class="recharge_list_data">
+                    #for(PayTotalVo pay:payBookList)
+                    <div class="recharge_list_data_item">
+                        <h3>《${pay.bookName}》消费${pay.cost}${PRODUCT_NAME}</h3>
+                        <p class="recharge_date">全本购买时间 ${pay.createTime.format("yyyy-MM-dd HH:mm")}</p>
+                    </div>
+                    #end
+                    #if(len(payBookList)>=3)
+                    <div class="recharge_list_data_item">
+                        <a href="${prefStr}/ft/user/payList.do?id=${user.id}" class="load_more recharge_load_more">更多记录</a>
+                    </div>
+                    #end
+                </div>
+            </div>
+            #end
+        </div>
+    </div>
+</div>
+</body>
+</html>

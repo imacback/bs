@@ -1,0 +1,54 @@
+<div id="consume" style="width: 100%; position: fixed; top: 80px; display: none; z-index: 1;">
+    <div style="width:300px; height:265px;background-color:#e6f3e0; margin: 0 auto; border:8px solid #62b599;">
+        <p id="loading" style="display:none;" align="center"><img src="/img/loading_05.gif" style=" position:absolute; z-index:999; margin:0 -50px; top:100px;"></p>
+        <div style="text-align:center; padding-bottom:10PX; padding-top:10PX; background-color:#e5f5dd;">
+            <div style="padding-left:10px; float:left;">
+                <span style="font-weight:700;">订阅</span>
+            </div>
+            <div style="padding-right:10px; float:right;">
+                <span style="font-size:12px;">余额：
+					<span style="color:#3C0"><% if (isEmpty(user.virtualCorn)) { %>0<% } else { %>${user.virtualCorn}<% } %></span>盘丝豆
+				</span>
+                <span style="padding-left:10px; padding-right:10px; font-size:12px;">|</span>
+					<span style="background:#E05A00; border-radius:2px; padding-left:5px; padding-bottom:5px; width:50px;line-height:24px;">
+							<a href="/recharge/entry.do" style="color:#FFF; font-size:14px;">充值</a>
+					</span>
+                <span onclick="closePay()" style="padding-right:5px;padding-left:20px;"><img style="width:16px; height:16px;" src="/img/colse.png"></span>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <div style="text-align:center; height:51px; line-height:50px;  background-color:#d1ecc3;">
+            <span style=" font-weight:bold; color:#333333;">《${book.name}》</span>&nbsp;&nbsp;<span style="color:#333333;font-size:12px;"><span style="color:#3C0">6</span>盘丝豆/千字</span>
+        </div>
+        <ul style="padding-top:10px;">
+            <li style="width:49%; float:left; padding-bottom:20px; padding-top:10PX;">
+                <div style="border-right:0.3px solid #e6f3e0; line-height:2em;" align="center">
+                    <div style="font-size:12px;">从第一个收费章节开始</div>
+                    <div style="font-size:12px;">订阅，请谨慎选择！</div>
+                    <div style="padding-top:10px;">
+                        <div style="background-color:#4D7A4D; border-radius:5px;width:90px;height:30px;">
+                            <div style="line-height:30px; font-size:14px; font-weight:700; color:#FFF;" onclick="batchCosume();">批量订阅</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li style="width:49%; float:right; padding-bottom:20PX; padding-top:10PX;">
+                <div style=" line-height:2em;" align="center">
+                    <%
+                    var length = strutil.length(chapter.name);
+                    %>
+                    <div style="font-size:12px;color:#333333;"><% if (length > 10) { %>${strutil.subStringTo(chapter.name,0,10)}...<% } else { %>${chapter.name}<% } %></div>
+                    <div style="font-size:12px;"><span style="color:#3C0">${chapter.words}</span>字/<span style="color:#3C0">${chapter.price}</span>盘丝豆</div>
+                    <div style="padding-top:10px;">
+                        <div style="background-color:#4D7A4D; border-radius:5px;width:90px;height:30px;">
+                            <div style="line-height:30px; font-size:14px; font-weight:700; color:#FFF;" onclick="consume();">确认订阅</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>               <div style="clear:both;"></div>
+        <div style="text-align:center; height:21px; line-height:20px;  background-color:#e6f2e6; font-size:12px">
+            提示:已购买的章节不会再重复购买。
+        </div>
+    </div>
+</div>

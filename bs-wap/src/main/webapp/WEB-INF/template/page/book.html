@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>书籍详情</title>
+    <% include("/share/meta.html"){} %>
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}css/reader.min.css${RES_VERSION}"/>
+    <script src="${RES_PATH}js/zepto.min.js"></script>
+    <script src="${RES_PATH}js/reader.min.js${RES_VERSION}"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/css/read.css" media="all">
+</head>
+<body>
+<% include("/include/nav.html"){} %>
+<div class="detail">
+    <section class="book-info">
+        <article class="clear">
+            <img data-src="${book.largePic}" src="${DEFAULT_COVER}"/>
+            <aside class="">
+                <h1>${book.name}
+                    <% if(book.isSerial!=1) { %><span class="tag0">完结</span><% } else { %><span class="tag2">连载</span><% } %>
+                    <% if(book.isFee==0) { %><span class="tag1">免费</span> <% } %>
+                </h1>
+                <div class="meta-info">
+                    <p>
+                        作者:<span>${book.author}</span>
+                    </p>
+                    <p>
+                        类型:<span>${book.categoryName}</span>
+                    </p>
+                    <p>
+                        字数:<span>${book.words>9999?book.words/10000+'万':book.words}字</span>
+                    </p>
+                </div>
+            </aside>
+        </article>
+    </section>
+    <section class="btn-list clear">
+        <div class="btn-list-inner">
+            <a href="/chapter/read.do?bid=${book.id}&orderId=${orderId}&isNext=0&isLight=${isLight}&fontSize=${font}&spacing=${spacing}&style=${style}">开始阅读</a>
+            <a href="/chapter/catalog.do?bid=${book.id}">查看目录</a>
+            <a href="#" id="addFav" data-book-id="${book.id}"><em></em></a>
+        </div>
+    </section>
+    <section class="desc_">
+        <div class="tabs clear">
+            <a href="" class="" data-index="0"><span>简介</span></a>
+            <a href="" class="" data-index="1"><span>&nbsp;</span></a>
+        </div>
+        <div class="tab-content">
+            <div class="tab-item clear" style="">
+                <article class="wrapper">
+                    ${book.shortMemo}
+                </article>
+                <% if(book.isSerial == 1) { %>
+                    <article id="desc" class="more_detail"><span></span></article>
+                    <article class="meta">
+                        <p>
+                            最新章节：<span id="readBookNewChapter" data-book-id="${book.id}" data-chapter-id="${book.publishChapters}">${book.updateChapter}</span>
+                        </p>
+                        <p>
+                            最近更新：${book.updateChapterDate,dateFormat="yyyy.MM.dd HH:mm"}
+                        </p>
+                    </article>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    <% if (tagList.~size > 0) { %>
+        <section>
+            <nav class="u-1 u-1-6 font_size_medium"><span>书籍标签</span></a></nav>
+            <div class="u-7 clear">
+                <% for(tag in tagList) { %>
+                    <a href="/tag/books.do?id=${tag.id}&name=${tag.name}" class="font_size_small"><span>${tag.name}</span></a>
+                <% } %>
+            </div>
+        </section>
+    <% } %>
+    <% if (recommendBooks.~size > 0) { %>
+        <section class="u-8">
+            <nav class="u-1 u-1-6 font_size_medium">
+                <span>猜你喜欢</span>
+            </nav>
+            <div class="u-2-wrapper">
+                <article class="u-2 clear">
+                    <% for(o in recommendBooks) { %>
+                    <article>
+                        <a href="/book/show.do?bid=${o.id}">
+                            <img data-src="${o.largePic}" src="${DEFAULT_COVER}">
+                            <p>${o.name}</p>
+                        </a>
+                    </article>
+                    <% } %>
+                </article>
+            </div>
+        </section>
+    <% } %>
+    <p class="copyright">&nbsp;</p>
+</div>
+<% include("/include/statis.html"){} %>
+</body>
+</html>

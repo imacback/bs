@@ -1,0 +1,26 @@
+<% /* 榜单 */  %>
+<section>
+    <nav class="u-1 u-1-3 font_size_medium" style="border-bottom-color: rgba(${component.fontColor},0.3)">
+        <img src="${component.icon}" alt="" /> <span style="color:rgba(${component.fontColor},1)">${component.title}</span>
+        <% if (has(component.entry) && component.entry.url != '') { %>
+        <a class="more" href="${component.entry.url}">${component.entry.title}
+            <img src="${RES_PATH}/images/icon-arrow.png" alt="" />
+        </a>
+        <% } %>
+    </nav>
+    <div class="u-6 clear">
+        <%
+            var size = component.data.~size;
+            for(o in component.data) {
+        %>
+            <% if (oLP.index % 3 == 1) { %>
+                <div class="u-6-${oLP.index/3+1}">
+            <% } %>
+                    <a href="${componentTarget(o.dataType, o.data)}">
+                        <span class="circle_bg_${oLP.index-1}">${oLP.index}</span>${o.title}
+                    </a>
+            <% if (oLP.index % 3 == 0 || oLP.index == size) { %>
+                </div>
+        <% } } %>
+    </div>
+</section>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>${paySwitchName}</title>
+        #include("../tools/meta.html")
+
+        <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+        <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+        <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+    </head>
+    <body class="body_phone_number">
+        <div class="recharge_phone_message">
+            <div class="order">
+                <form action="">
+                    <div class="recharge_phone_message_input_item">
+                        <img src="${RES_PATH}/images/icon_mobile.jpg" alt=""/>
+                        <div>
+                            <input maxlength="11" id="recharge_phone_message_input_phone_number" placeholder="请输入您要充值的手机号" value="${telNum}"/>
+                        </div>
+                    </div>
+                    <button id="recharge_phone_message_input_submit" data-price="${payConfigId}" data-pay-type="${payTypeId}" type="submit" class="btn_green btn_orange recharge_phone_message_input_submit">立即充值</button>
+                </form>
+                <div class="intro" id="intro">
+                    <div class="intro-inner">
+                        ${tips}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

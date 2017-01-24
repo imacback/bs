@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0042)http://m.fensebook.com/index.php/Index/Reg -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="http://phone.fensebook.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+    <title>粉色书城_精选言情小说全本连载_女生的移动图书馆</title>
+    <style>
+        .others {
+            margin-top: 10px;
+            padding-top: 14px!important;
+            border-top: 1px dotted #ccc;
+            font-size: 0.875em;
+            color: #999;
+        }
+        .others a {
+            margin-right: 3px;
+        }
+        .others .divide {
+            border-left: 1px dotted #ccc;
+            margin-right: 10px;
+        }
+    </style>
+    <script src="http://hm.baidu.com/hm.js?4b2fa8f3ee227d277d7aa654f64a504a"></script><script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?4b2fa8f3ee227d277d7aa654f64a504a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <style type="text/css"></style></head>
+<body class="sign-form pagebackground">
+<% include("/share/top.html", {login:"1"}){} %>
+<div class="container">
+    <div class="top-alert">
+    </div>
+    <div class="mod block form">
+        <div class="hd"><h4>注册</h4></div>
+        <form action="/user/registerSave.do" method="post" class="form-horizontal">
+            <div class="bd">
+                <input type="hidden" name="backUrl" value="http://m.fensebook.com/">
+                <div class="item">
+                    <div class="item-label">邮　箱</div>
+                    <div class="item-control">
+                        <input type="text" maxlength="60" size="28" class="text" name="email" value="">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-label">账　户</div>
+                    <div class="item-control">
+                        <input type="text" maxlength="60" size="28" class="text" name="userName" value="">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-label">性　别</div>
+                    <div class="item-control">
+                        &nbsp;&nbsp;男&nbsp;<input type="radio" name="sex" value="1" checked="checked">
+                        &nbsp;&nbsp;女&nbsp;<input type="radio" name="sex" value="0">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-label">密　码</div>
+                    <div class="item-control">
+                        <input type="password" maxlength="20" size="28" class="text" name="password">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="item-label">确认密码</div>
+                    <div class="item-control">
+                        <input type="password" maxlength="20" size="28" class="text" name="confirmPassword">
+                    </div>
+                </div>
+            </div>
+            <div class="ft">
+                <input type="submit" value="注册" class="btn btn-auto btn-blue">
+            </div>
+        </form>
+    </div>
+    <% if (!isEmpty(msg)) { %>${msg}<% } %>
+</div>
+<% include("/share/footer.html"){} %>
+
+
+</body></html>

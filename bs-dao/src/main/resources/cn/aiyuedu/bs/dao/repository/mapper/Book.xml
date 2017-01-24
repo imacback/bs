@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.duoqu.rs.dao.repository.BookDao">
+
+    <insert id="insert" parameterType="book" useGeneratedKeys="true" keyProperty="id">
+        insert into t_book(
+                cp_book_id,
+                name,
+                author,
+                category_ids,
+                is_serial,
+                words,
+                chapters,
+                publish_chapters,
+                update_chapter_date,
+                update_chapter_id,
+                update_chapter,
+                small_pic,
+                large_pic,
+                online_date,
+                offline_date,
+                memo,
+                check_level,
+                tag_classify_id,
+                tag_sex_id,
+                tag_content_ids,
+                tag_supply_ids,
+                short_recommend,
+                long_recommend,
+                provider_id,
+                isbn,
+                batch_id,
+                is_fee,
+                is_whole_fee,
+                operate_platform_ids,
+                fee_platform_ids,
+                fee_type_ids,
+                fee_chapter,
+                day_publish_chapters,
+                whole_price,
+                thousand_words_price,
+                status,
+                create_date,
+                creator_id,
+                edit_date,
+                editor_id
+        ) values (
+                #{cpBookId},
+                #{name},
+                #{author},
+                #{categoryIds},
+                #{isSerial},
+                #{words},
+                #{chapters},
+                #{publishChapters},
+                #{updateChapterDate},
+                #{updateChapterId},
+                #{updateChapter},
+                #{smallPic},
+                #{largePic},
+                #{onlineDate},
+                #{offlineDate},
+                #{memo},
+                #{checkLevel},
+                #{tagClassifyId},
+                #{tagSexId},
+                #{tagContentIds},
+                #{tagSupplyIds},
+                #{shortRecommend},
+                #{longRecommend},
+                #{providerId},
+                #{isbn},
+                #{batchId},
+                #{isFee},
+                #{isWholeFee},
+                #{operatePlatformIds},
+                #{feePlatformIds},
+                #{feeTypeIds},
+                #{feeChapter},
+                #{dayPublishChapters},
+                #{wholePrice},
+                #{thousandWordsPrice},
+                #{status},
+                #{createDate},
+                #{creatorId},
+                #{editDate},
+                #{editorId}
+        )
+    </insert>
+
+    <select id="contain" resultType="int">
+        <![CDATA[
+            select count(*) from t_book
+        ]]>
+        <where>
+            <if test="name != null">
+                name = #{name}
+            </if>
+            <if test="author != null">
+                and author = #{author}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="id != null">
+                <![CDATA[
+                    and id != #{id}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="get" parameterType="long" resultType="bookDto">
+        <![CDATA[
+			select
+			        id,
+			        cp_book_id cpBookId,
+                    name,
+                    author,
+                    category_ids categoryIds,
+                    is_serial isSerial,
+                    words,
+                    chapters,
+                    publish_chapters publishChapters,
+                    update_chapter_date updateChapterDate,
+                    update_chapter_id updateChapterId,
+                    update_chapter updateChapter,
+                    small_pic smallPic,
+                    large_pic largePic,
+                    online_date onlineDate,
+                    offline_date offlineDate,
+                    memo,
+                    check_level checkLevel,
+                    tag_classify_id tagClassifyId,
+                    tag_sex_id tagSexId,
+                    tag_content_ids tagContentIds,
+                    tag_supply_ids tagSupplyIds,
+                    short_recommend shortRecommend,
+                    long_recommend longRecommend,
+                    provider_id providerId,
+                    isbn,
+                    batch_id batchId,
+                    is_fee isFee,
+                    is_whole_fee isWholeFee,
+                    operate_platform_ids operatePlatformIds,
+                    fee_platform_ids feePlatformIds,
+                    fee_type_ids feeTypeIds,
+                    fee_chapter feeChapter,
+                    day_publish_chapters dayPublishChapters,
+                    whole_price wholePrice,
+                    thousand_words_price thousandWordsPrice,
+                    status,
+                    create_date createDate,
+                    creator_id creatorId,
+                    edit_date editDate,
+                    editor_id editorId
+			from t_book
+        ]]>
+        <where>
+            <if test="cpBookId != null">
+                cp_book_id = #{cpBookId}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="book">
+        update t_book
+        <set>
+
+            <if test="name != null">
+                name = #{name},
+            </if>
+
+            <if test="author != null">
+                author = #{author},
+            </if>
+
+            <if test="categoryIds != null">
+                category_ids = #{categoryIds},
+            </if>
+
+            <if test="isSerial != null">
+                is_serial = #{isSerial},
+            </if>
+
+            <if test="words != null">
+                words = #{words},
+            </if>
+
+            <if test="chapters != null">
+                chapters = #{chapters},
+            </if>
+
+            <if test="publishChapters != null">
+                publish_chapters = #{publishChapters},
+            </if>
+
+            <if test="updateChapterDate != null">
+                update_chapter_date = #{updateChapterDate},
+            </if>
+            <if test="updateChapterId != null">
+                update_chapter_id = #{updateChapterId},
+            </if>
+            <if test="updateChapter != null">
+                update_chapter = #{updateChapter},
+            </if>
+
+            <if test="smallPic != null">
+                small_pic = #{smallPic},
+            </if>
+
+            <if test="largePic != null">
+                large_pic = #{largePic},
+            </if>
+
+            <if test="onlineDate != null">
+                online_date = #{onlineDate},
+            </if>
+
+            <if test="offlineDate != null">
+                offline_date = #{offlineDate},
+            </if>
+
+            <if test="memo != null">
+                memo = #{memo},
+            </if>
+
+            <if test="checkLevel != null">
+                check_level = #{checkLevel},
+            </if>
+
+            <if test="tagClassifyId != null">
+                tag_classify_id = #{tagClassifyId},
+            </if>
+
+            <if test="tagSexId != null">
+                tag_sex_id = #{tagSexId},
+            </if>
+
+            <if test="tagContentIds != null">
+                tag_content_ids = #{tagContentIds},
+            </if>
+
+            <if test="tagSupplyIds != null">
+                tag_supply_ids = #{tagSupplyIds},
+            </if>
+
+            <if test="shortRecommend != null">
+                short_recommend = #{shortRecommend},
+            </if>
+
+            <if test="longRecommend != null">
+                long_recommend = #{longRecommend},
+            </if>
+
+            <if test="providerId != null">
+                provider_id = #{providerId},
+            </if>
+
+            <if test="isbn != null">
+                isbn = #{isbn},
+            </if>
+
+            <if test="batchId != null">
+                batch_id = #{batchId},
+            </if>
+
+            <if test="isFee != null">
+                is_fee = #{isFee},
+            </if>
+
+            <if test="isWholeFee != null">
+                is_whole_fee = #{isWholeFee},
+            </if>
+
+            <if test="operatePlatformIds != null">
+                operate_platform_ids = #{operatePlatformIds},
+            </if>
+
+            <if test="feePlatformIds != null">
+                fee_platform_ids = #{feePlatformIds},
+            </if>
+
+            <if test="feeTypeIds != null">
+                fee_type_ids = #{feeTypeIds},
+            </if>
+
+            <if test="feeChapter != null">
+                fee_chapter = #{feeChapter},
+            </if>
+
+            <if test="dayPublishChapters != null">
+                day_publish_chapters = #{dayPublishChapters},
+            </if>
+
+            <if test="wholePrice != null">
+                whole_price = #{wholePrice},
+            </if>
+
+            <if test="thousandWordsPrice != null">
+                thousand_words_price = #{thousandWordsPrice},
+            </if>
+
+            <if test="status != null">
+                status = #{status},
+            </if>
+
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+
+            <if test="creatorId != null">
+                creator_id = #{creatorId},
+            </if>
+
+            <if test="editDate != null">
+                edit_date = #{editDate},
+            </if>
+
+            <if test="editorId != null">
+                editor_id = #{editorId}
+            </if>
+
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        <![CDATA[
+            select count(*) from t_book
+        ]]>
+        <where>
+            <if test="id != null">
+                <![CDATA[
+                    id = #{id}
+                ]]>
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="isSerial != null">
+                and is_serial = #{isSerial}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="checkLevel != null">
+                and check_level>#{checkLevel}
+            </if>
+            <if test="tagClassifyId != null">
+                and tag_classify_id = #{tagClassifyId}
+            </if>
+            <if test="tagSexId != null">
+                and tag_sex_id = #{tagSexId}
+            </if>
+            <if test="startEditDate != null">
+                and edit_date>#{startEditDate}
+            </if>
+            <if test="endEditDate != null">
+                and #{endEditDate}>edit_date
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+            <if test="author != null">
+                and (author like concat('%',#{author},'%'))
+            </if>
+            <if test="tagContentIds != null">
+                and (tag_content_ids like concat('%',#{tagContentIds},'%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="find" parameterType="map" resultType="book">
+        <![CDATA[
+    			select
+                         id,
+                         cp_book_id cpBookId,
+                         name,
+                         author,
+                         category_ids categoryIds,
+                         is_serial isSerial,
+                         words,
+                         chapters,
+                         publish_chapters publishChapters,
+                         update_chapter_date updateChapterDate,
+                         update_chapter_id updateChapterId,
+                         update_chapter updateChapter,
+                         small_pic smallPic,
+                         large_pic largePic,
+                         online_date onlineDate,
+                         offline_date offlineDate,
+                         memo,
+                         check_level checkLevel,
+                         tag_classify_id tagClassifyId,
+                         tag_sex_id tagSexId,
+                         tag_content_ids tagContentIds,
+                         tag_supply_ids tagSupplyIds,
+                         short_recommend shortRecommend,
+                         long_recommend longRecommend,
+                         provider_id providerId,
+                         isbn,
+                         batch_id batchId,
+                         is_fee isFee,
+                         is_whole_fee isWholeFee,
+                         operate_platform_ids operatePlatformIds,
+                         fee_platform_ids feePlatformIds,
+                         fee_type_ids feeTypeIds,
+                         fee_chapter feeChapter,
+                         day_publish_chapters dayPublishChapters,
+                         whole_price wholePrice,
+                         thousand_words_price thousandWordsPrice,
+                         create_date createDate,
+                         status
+    			from t_book
+    		]]>
+        <where>
+            <if test="id != null">
+                <![CDATA[
+                       id = #{id}
+                   ]]>
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="isSerial != null">
+                and is_serial = #{isSerial}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="checkLevel != null">
+                and check_level>#{checkLevel}
+            </if>
+            <if test="tagClassifyId != null">
+                and tag_classify_id = #{tagClassifyId}
+            </if>
+            <if test="tagSexId != null">
+                and tag_sex_id = #{tagSexId}
+            </if>
+            <if test="startEditDate != null">
+                and edit_date>#{startEditDate}
+            </if>
+            <if test="endEditDate != null">
+                and #{endEditDate}>edit_date
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+            <if test="author != null">
+                and (author like concat('%',#{author},'%'))
+            </if>
+            <if test="tagContentIds != null">
+                and (tag_content_ids like concat('%',#{tagContentIds},'%'))
+            </if>
+        </where>
+        <![CDATA[
+    			order by id desc
+    		]]>
+        <if test="start != null">
+            <![CDATA[
+                    limit #{start},#{limit}
+                ]]>
+        </if>
+    </select>
+
+    <select id="getBookDtos" parameterType="bookQueryDto" resultType="bookDto">
+        <![CDATA[
+    			select
+                         id,
+                         cp_book_id cpBookId,
+                         name,
+                         author,
+                         category_ids categoryIds,
+                         is_serial isSerial,
+                         words,
+                         chapters,
+                         publish_chapters publishChapters,
+                         update_chapter_date updateChapterDate,
+                         update_chapter_id updateChapterId,
+                         update_chapter updateChapter,
+                         small_pic smallPic,
+                         large_pic largePic,
+                         online_date onlineDate,
+                         offline_date offlineDate,
+                         memo,
+                         check_level checkLevel,
+                         tag_classify_id tagClassifyId,
+                         tag_sex_id tagSexId,
+                         tag_content_ids tagContentIds,
+                         tag_supply_ids tagSupplyIds,
+                         short_recommend shortRecommend,
+                         long_recommend longRecommend,
+                         provider_id providerId,
+                         isbn,
+                         batch_id batchId,
+                         is_fee isFee,
+                         is_whole_fee isWholeFee,
+                         operate_platform_ids operatePlatformIds,
+                         fee_platform_ids feePlatformIds,
+                         fee_type_ids feeTypeIds,
+                         fee_chapter feeChapter,
+                         day_publish_chapters dayPublishChapters,
+                         whole_price wholePrice,
+                         thousand_words_price thousandWordsPrice,
+                         status,
+                         create_date createDate,
+                         creator_id creatorId,
+                         edit_date editDate,
+                         editor_id editorId
+    			from t_book
+    		]]>
+        <where>
+            <if test="id != null">
+                <![CDATA[
+                       id = #{id}
+                   ]]>
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="isSerial != null">
+                and is_serial = #{isSerial}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="checkLevel != null">
+                and check_level>#{checkLevel}
+            </if>
+            <if test="tagClassifyId != null">
+                and tag_classify_id = #{tagClassifyId}
+            </if>
+            <if test="tagSexId != null">
+                and tag_sex_id = #{tagSexId}
+            </if>
+            <if test="startEditDate != null">
+                and edit_date>#{startEditDate}
+            </if>
+            <if test="endEditDate != null">
+                and #{endEditDate}>edit_date
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+            <if test="author != null">
+                and (author like concat('%',#{author},'%'))
+            </if>
+            <if test="tagContentIds != null">
+                and (tag_content_ids like concat('%',#{tagContentIds},'%'))
+            </if>
+        </where>
+        <![CDATA[
+            order by id desc
+    	]]>
+        <if test="start != null">
+            <![CDATA[
+                limit #{start},#{limit}
+            ]]>
+        </if>
+    </select>
+
+    <select id="getSimpleBookDtos" parameterType="bookQueryDto" resultType="bookDto">
+        <![CDATA[
+    			select
+                         id,
+                         cp_book_id cpBookId,
+                         name,
+                         author,
+                         is_serial isSerial,
+                         words,
+                         chapters,
+                         publish_chapters publishChapters,
+                         tag_classify_id tagClassifyId,
+                         tag_sex_id tagSexId,
+                         tag_content_ids tagContentIds,
+                         provider_id providerId,
+                         status,
+                         edit_date editDate
+    			from t_book
+    		]]>
+        <where>
+            <if test="id != null">
+                <![CDATA[
+                       id = #{id}
+                   ]]>
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="isSerial != null">
+                and is_serial = #{isSerial}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="checkLevel != null">
+                and check_level>#{checkLevel}
+            </if>
+            <if test="tagClassifyId != null">
+                and tag_classify_id = #{tagClassifyId}
+            </if>
+            <if test="tagSexId != null">
+                and tag_sex_id = #{tagSexId}
+            </if>
+            <if test="startEditDate != null">
+                and edit_date>#{startEditDate}
+            </if>
+            <if test="endEditDate != null">
+                and #{endEditDate}>edit_date
+            </if>
+            <if test="name != null">
+                and (name like concat('%',#{name},'%'))
+            </if>
+            <if test="author != null">
+                and (author like concat('%',#{author},'%'))
+            </if>
+            <if test="tagContentIds != null">
+                and (tag_content_ids like concat('%',#{tagContentIds},'%'))
+            </if>
+        </where>
+        <![CDATA[
+            order by id desc
+    	]]>
+        <if test="start != null">
+            <![CDATA[
+                limit #{start},#{limit}
+            ]]>
+        </if>
+    </select>
+
+    <delete id="del" parameterType="long">
+        <![CDATA[
+            delete from t_book where id = #{id}
+        ]]>
+    </delete>
+
+    <delete id="delete" parameterType="list">
+        <![CDATA[
+                delete from t_book where id in
+            ]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findByIds" parameterType="list" resultType="book">
+        <![CDATA[
+    			select
+                         id,
+                         cp_book_id cpBookId,
+                         name,
+                         author,
+                         category_ids categoryIds,
+                         is_serial isSerial,
+                         words,
+                         chapters,
+                         publish_chapters publishChapters,
+                         update_chapter_date updateChapterDate,
+                         update_chapter_id updateChapterId,
+                         update_chapter updateChapter,
+                         small_pic smallPic,
+                         large_pic largePic,
+                         online_date onlineDate,
+                         offline_date offlineDate,
+                         memo,
+                         check_level checkLevel,
+                         tag_classify_id tagClassifyId,
+                         tag_sex_id tagSexId,
+                         tag_content_ids tagContentIds,
+                         tag_supply_ids tagSupplyIds,
+                         short_recommend shortRecommend,
+                         long_recommend longRecommend,
+                         provider_id providerId,
+                         isbn,
+                         batch_id batchId,
+                         is_fee isFee,
+                         is_whole_fee isWholeFee,
+                         operate_platform_ids operatePlatformIds,
+                         fee_platform_ids feePlatformIds,
+                         fee_type_ids feeTypeIds,
+                         fee_chapter feeChapter,
+                         day_publish_chapters dayPublishChapters,
+                         whole_price wholePrice,
+                         thousand_words_price thousandWordsPrice,
+                         status
+    			from t_book where id in
+    		]]>
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

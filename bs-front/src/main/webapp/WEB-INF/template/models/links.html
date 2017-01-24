@@ -1,0 +1,23 @@
+##首页-合作区组件
+#define(ComponentBaseVo comp)
+#set(
+    compPrefStr = pref(prefStr,'cp',comp.id)
+)
+#set(color = 'color:  rgba(' + comp.styleColor + ',1)')
+#set(linecolor = 'border-bottom-color: rgba(' + comp.styleColor + ',0.3)')
+<section>
+    <nav class="u-1 u-1-5 font_size_medium" style="${linecolor}">
+        <img src="${comp.logo}" alt="" />
+        <span style="${color}">${comp.name}</span>
+        #if(comp.url!=null&&comp.url!='')
+        <a class="more" href="${compPrefStr + comp.url}">${comp.entryName}
+            <img src="${RES_PATH}/images/icon-arrow.png" alt="" />
+        </a>
+        #end
+    </nav>
+    <section class="banner-multi clear padding_left_right">
+        #for(DataBaseVo data:comp.list)
+            <a href="${compPrefStr + data.url}"><img data-src="${data.logo}"/></a>
+        #end
+    </section>
+</section>

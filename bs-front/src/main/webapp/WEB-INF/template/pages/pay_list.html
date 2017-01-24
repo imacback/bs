@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>账户记录</title>
+    #include("../tools/meta.html")
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}">
+    <script>
+        var $_list = {
+            url: "${prefStr}/ft/user/payListAjax.do?id=${uid}&p=",
+            max: 20,
+            canLoading:"${len(payList)>=10}"=="true"
+        };
+    </script>
+    <script src="${RES_PATH}/js/zepto.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}/js/reader${RES_PARAM}.js${RES_VERSION}"></script>
+</head>
+<body>
+<div class="order recharge_list_detail">
+    <div class="recharge_nav">
+        <div class="recharge_nav_inner clear">
+            <a href="${prefStr}/ft/user/rechList.do?id=${uid}">充值记录</a>
+            <a class="cur">消费记录</a>
+        </div>
+    </div>
+
+
+
+    #if(len(payList)>0)
+        <div class="recharge_detail_data" id="consume_list">
+            #for(PayTotalVo vo:payList)
+            <div class="recharge_detail_data_item">
+                <h3>${vo.title}</h3>
+                <p class="recharge_detail_date">${vo.dateStr}</p>
+            </div>
+            #end
+        </div>
+    #else
+    <div class="no_recharge">
+        <img src="${RES_PATH}/images/icon_no_recharge.png" alt="" />
+        <p>您还没有消费记录</p>
+    </div>
+    #end
+</div>
+
+</body>
+</html>

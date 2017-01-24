@@ -1,0 +1,12 @@
+##根据页面ID判断引入的CSS
+#if(pageId==PAGE_HOME_ID)
+<link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+<link rel="stylesheet" type="text/css" href="${RES_PATH}/static/style/channel.css"/>
+<link rel="stylesheet" type="text/css" href="${RES_PATH}/static/style/index.css"/>
+#else
+<link rel="stylesheet" type="text/css" href="${RES_PATH}/css/reader.min.css${RES_VERSION}"/>
+<link rel="stylesheet" type="text/css" href="${RES_PATH}/static/style/index.css"/>
+<link rel="stylesheet" type="text/css" href="${RES_PATH}/static/style/channel.css"/>
+#end
+
+

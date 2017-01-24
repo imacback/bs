@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="bookIndexDao" class="cn.aiyuedu.bs.index.BookIndexDao">
+        <property name="bookSolrImpl" ref="bookSolrImpl"></property>
+    </bean>
+
+    <bean id="bookSolrImpl" class="cn.aiyuedu.bs.index.base.SolrDaoImpl">
+        <property name="solrServer" ref="bookSolrServer"></property>
+    </bean>
+
+    <bean id="bookSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg index="0" value="http://127.0.0.1:8080/solr/book"></constructor-arg>
+    </bean>
+
+
+    <bean id="chapIndexDao" class="cn.aiyuedu.bs.index.ChapterIndexDao">
+        <property name="chapSolrImpl" ref="chapSolrImpl"></property>
+    </bean>
+
+
+    <bean id="chapSolrImpl" class="cn.aiyuedu.bs.index.base.SolrCloudDaoImpl">
+        <property name="solrServer" ref="chapSolrServer"></property>
+    </bean>
+
+    <bean id="chapSolrServer" class="org.apache.solr.client.solrj.impl.CloudSolrServer">
+        <constructor-arg index="0" value="${zkHostString}"></constructor-arg>
+        <property name="defaultCollection" value="${chapCollection}"></property>
+    </bean>
+
+</beans>

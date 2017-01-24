@@ -1,0 +1,25 @@
+##文字导航
+#define(NavVo comp)
+#set(
+    compPrefStr = pref(prefStr,'cp',comp.id)
+)
+<!-- begin 导航样式2 -->
+<section class="nav_1">
+    <div class="tb">
+        #for(DataBaseVo data:comp.group[0].list)
+            <div class="tb_cell w33">
+                <a href="${compPrefStr + data.url}" class="nav_item font_size_medium bg_color${for.index-1}">${data.name}</a>
+            </div>
+        #end
+    </div>
+    #if(comp.group.size()>1)
+        <div class="gap_line"><!-- gap_line --></div>
+        #for(DataBaseVo data:comp.group[1].list)
+            <a class="notice padding_all" href="${compPrefStr + data.url}">
+                <img src="${RES_PATH}/images/icon_notice.png" alt="" />
+                <span>${data.name}</span>
+            </a>
+        #end
+    #end
+</section>
+<!-- end 导航样式2 -->

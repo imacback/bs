@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="ossProxy" class="com.duoqu.commons.oss.proxy.impl.OSSProxyImpl">
+        <property name="endpoint" value="${aiyun.oss.endpoint}"/>
+        <property name="accessKeyId" value="${aiyun.oss.accessKeyId}"/>
+        <property name="accessKeySecret" value="${aiyun.oss.accessKyeSecret}"/>
+        <property name="connectionTimeout" value="${aiyun.oss.connectionTimeout}"/>
+        <property name="maxConnects" value="${aiyun.oss.maxConnects}"/>
+        <property name="maxErrorRetry" value="${aiyun.oss.maxErrorRetry}"/>
+        <property name="socetTimeout" value="${aiyun.oss.socetTimeout}"/>
+    </bean>
+
+</beans>

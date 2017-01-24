@@ -1,0 +1,43 @@
+<% /* 书籍推荐 */  %>
+<section>
+    <nav class="u-1 u-1-1 font_size_medium" style="border-bottom-color: rgba(${component.fontColor},0.3)">
+        <img src="${component.icon}" alt="" />
+        <span style="color:rgba(${component.fontColor},1)">${component.name}</span>
+    </nav>
+    <%
+        if (component.books.~size > 0) {
+            var first = component.books[0];
+    %>
+    <div class="rec_top margin_not_top">
+        <a href="/book/show.do?bid=${first.id}" class="u-3 clear padding_all">
+            <img class="cover" data-src="${first.smallPic}" src="${DEFAULT_COVER}">
+            <aside>
+                <p>${first.name}</p>
+                <p class="font_size_small">${first.author}</p>
+                <p class="font_size_small">${first.shortMemo}</p>
+            </aside>
+        </a>
+        <img class="hot_rec" src="${RES_PATH}/images/icon_hot_rec.png" alt="" />
+    </div>
+    <% } %>
+    <% if (component.books.~size > 1) { %>
+    <div class="u-2-wrapper mt_8">
+        <%
+            var size = component.books.~size;
+            for(var i=1;i<size;i++) {
+        %>
+        <% if (i % 3 == 1) { %>
+            <article class="u-2 clear">
+        <% } %>
+                <article>
+                    <a href="/book/show.do?bid=${component.books[i].id}">
+                        <img data-src="${component.books[i].largePic}" src="${DEFAULT_COVER}"/>
+                        <p>${component.books[i].name}</p>
+                    </a>
+                </article>
+        <% if (i % 3 == 0 || i == size) { %>
+            </article>
+        <% } } %>
+    </div>
+    <% } %>
+</section>

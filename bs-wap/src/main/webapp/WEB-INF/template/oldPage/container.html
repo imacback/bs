@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<% include("/share/header.html"){} %>
+<head>
+    <title>${container.name}</title>
+    <% include("/share/meta.html"){} %>
+    <link rel="stylesheet" type="text/css" href="${RES_PATH}css/reader.min.css${RES_VERSION}"/>
+    <script src="${RES_PATH}js/zepto.min.js"></script>
+    <script src="${RES_PATH}js/reader.min.js${RES_VERSION}"></script>
+    <script src="${RES_PATH}js/index.min.js${RES_VERSION}"></script>
+</head>
+<body>
+<div class="home">
+    <% for(component in container.components) { %>
+    <% var path = "/component/" + component.typeId + ".html"; %>
+    <% include(path, {component:component}){} %>
+    <% } %>
+</div>
+</body>
+</html>
