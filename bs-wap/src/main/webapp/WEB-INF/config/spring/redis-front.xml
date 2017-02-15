@@ -28,6 +28,7 @@
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" lazy-init="false"
           p:hostName="${redis.host.front}"
           p:port="${redis.port.front}"
+          p:password="${redis.pass}"
           p:database="${redis.database.front}"
           p:timeout="${redis.timeout}"
           p:usePool="${redis.use.pool}"
